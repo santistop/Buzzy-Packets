@@ -228,7 +228,9 @@
   .qtext .word, .answer-reveal .word{ transition:background .1s, color .1s; border-radius:4px; }
   .qtext .word.active{ background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:var(--accent-ink); padding:0 .15rem; margin:0 -.15rem; box-shadow:0 0 18px var(--accent-glow); }
   .answer-reveal .word.active{ background:var(--good); color:#062B10; padding:0 .12rem; margin:0 -.12rem; }
-  .qtext .word.pending, .answer-reveal .word.pending{ visibility:hidden; }
+  /* Words not yet spoken stay invisible (but keep their layout space, so the
+     line doesn't reflow/jump as each word is revealed). */
+  .qtext .word.pending{ visibility:hidden; }
   .answer-label{ font-weight:700; opacity:.9; }
   .answer-reveal{
     font-size:1.15rem; color:var(--good); background:linear-gradient(180deg, rgba(94,217,141,.09), rgba(94,217,141,.02));
@@ -954,18 +956,20 @@ async function handleFile(file){
 
 // voices
 // The browser's speechSynthesis voice list mixes old robotic "local" system
-// voices in with newer cloud-delivered neural voices (e.g. Chrome's "Google
-// US English", Edge's "...Online (Natural)" voices, macOS's Enhanced/Premium
-// Siri voices). Both kinds are free — no API key or account needed — but the
-// neural ones sound dramatically less robotic. We can't query audio quality
-// directly, but voice *names* reliably flag the good ones, so we rank on
-// that and default to the best match instead of whatever the browser lists
-// first (usually the classic voice).
+// voices in with cloud-delivered neural voices (e.g. Chrome's "Google US
+// English", Edge's "...Online (Natural)" voices). Cloud voices can sound
+// better, but the audio streams over the network while onboundary events
+// fire on the browser's own estimate of timing — the two can drift apart,
+// which is exactly what makes the on-screen word highlight fall behind or
+// race ahead of what's actually being spoken. Local ("regular") voices play
+// instantly with no network round-trip, so their boundary events track the
+// real audio far more reliably. We rank local voices highest for that
+// reason, even though a couple of them may sound a bit more robotic.
 function scoreVoiceQuality(v){
   const n = v.name.toLowerCase();
   let score = 0;
-  if (/natural|neural|premium|enhanced|studio|wavenet|siri/.test(n)) score += 100;
-  if (!v.localService) score += 40; // cloud-delivered voices are usually higher quality
+  if (v.localService) score += 100; // instant + reliably in sync — prioritize this over how "natural" a voice sounds
+  if (/natural|neural|premium|enhanced|studio|wavenet|siri/.test(n) && v.localService) score += 20;
   if (/^en/i.test(v.lang)) score += 10;
   if (/en-us/i.test(v.lang)) score += 5;
   return score;
@@ -981,18 +985,15 @@ function populateVoices(){
     .sort((a,b)=> b.score - a.score);
 
   sel.innerHTML = ranked.map(({v,i,score})=>{
-    const tag = score >= 100 ? '✨ ' : (!v.localService ? '☁️ ' : '');
+    const tag = !v.localService ? '☁️ ' : (score >= 100 ? '✅ ' : '');
     return `<option value="${i}">${tag}${v.name} (${v.lang})</option>`;
   }).join('');
 
-  const best = ranked.find(r => r.score >= 100) || ranked.find(r => /^en/i.test(r.v.lang)) || ranked[0];
+  const best = ranked.find(r => r.v.localService && /^en/i.test(r.v.lang)) || ranked.find(r => r.v.localService) || ranked[0];
   if (best) sel.value = best.i;
 
   if (hintEl){
-    const hasNatural = ranked.some(r => r.score >= 100);
-    hintEl.textContent = hasNatural
-      ? '✨ = a natural-sounding neural voice — already picked for you, all free, no account needed.'
-      : 'These are your system\'s default voices, which can sound robotic. For free natural voices: on Edge, install/select an "Online (Natural)" voice; on Chrome, pick a "Google" voice; on macOS, add an Enhanced/Premium voice in System Settings → Accessibility → Spoken Content.';
+    hintEl.textContent = '✅ = a local system voice — picked by default because it plays instantly, so the on-screen word highlight stays in sync. ☁️ voices stream over the network and can sound more natural, but may drift out of sync with the highlight — pick one only if you don\'t need the text to track the narration precisely.';
   }
 }
 if (window.speechSynthesis){
@@ -1559,6 +1560,19 @@ function renderWordSpans(container, text, hideInitially){
   return wordEls;
 }
 function makeRevealState(){ return { activeEl: null, revealedUpTo: -1 }; }
+// Reveals every word up through `idx` (in reading order) and marks `idx` as
+// the currently-spoken word. Shared by the real onboundary-driven path and
+// the timer-based fallback below.
+function revealIndexUpTo(wordEls, idx, state){
+  if (idx < 0 || idx >= wordEls.length) return;
+  if (idx > state.revealedUpTo){
+    for (let i = state.revealedUpTo + 1; i <= idx; i++) wordEls[i].el.classList.remove('pending');
+    state.revealedUpTo = idx;
+  }
+  if (state.activeEl) state.activeEl.classList.remove('active');
+  wordEls[idx].el.classList.add('active');
+  state.activeEl = wordEls[idx].el;
+}
 function revealAndHighlight(wordEls, charIndex, state){
   let idx = -1;
   for (let i = 0; i < wordEls.length; i++){
@@ -1571,17 +1585,18 @@ function revealAndHighlight(wordEls, charIndex, state){
     }
   }
   if (idx === -1) return;
-  if (idx > state.revealedUpTo){
-    for (let i = state.revealedUpTo + 1; i <= idx; i++) wordEls[i].el.classList.remove('pending');
-    state.revealedUpTo = idx;
-  }
-  if (state.activeEl) state.activeEl.classList.remove('active');
-  wordEls[idx].el.classList.add('active');
-  state.activeEl = wordEls[idx].el;
+  revealIndexUpTo(wordEls, idx, state);
 }
 function revealAll(wordEls, state){
   wordEls.forEach(w=>w.el.classList.remove('pending'));
   if (state && state.activeEl){ state.activeEl.classList.remove('active'); state.activeEl = null; }
+}
+// Force every word in a container fully visible, un-highlighted. Used when
+// reading is interrupted (buzz, skip) so nothing stays stuck hidden.
+function revealAllWordsIn(container){
+  if (!container) return;
+  container.querySelectorAll('.word.pending').forEach(el=>el.classList.remove('pending'));
+  container.querySelectorAll('.word.active').forEach(el=>el.classList.remove('active'));
 }
 
 function speak(text, onend, container){
@@ -1593,7 +1608,7 @@ function speak(text, onend, container){
   let wordEls = [];
   const state = makeRevealState();
   if (container){
-    wordEls = renderWordSpans(container, text, true);
+    wordEls = renderWordSpans(container, text);
     u.onboundary = (e)=>{
       if (e.name && e.name !== 'word') return;
       if (typeof e.charIndex === 'number') revealAndHighlight(wordEls, e.charIndex, state);
@@ -1696,16 +1711,47 @@ function playReadingQueue(queue, wordEls, gen, onDone){
       return;
     }
     if (!window.speechSynthesis){ next(); return; }
+
+    // Word indices (in the full question) that fall inside this queue item,
+    // used only by the timer fallback below.
+    const itemWordIdxs = [];
+    for (let k = 0; k < wordEls.length; k++){
+      if (wordEls[k].start >= item.offset && wordEls[k].start < item.offset + item.text.length) itemWordIdxs.push(k);
+    }
+
     const u = new SpeechSynthesisUtterance(item.text);
     u.rate = S.config.rate;
     if (S.config.voiceURI) u.voice = S.config.voiceURI;
+
+    let boundaryFired = false;
+    let fallbackHandle = null;
+    let fallbackPtr = 0;
+    const clearFallback = ()=>{ if (fallbackHandle){ clearInterval(fallbackHandle); fallbackHandle = null; } };
+
     u.onboundary = (e)=>{
       if (gen !== S.match.readGen) return;
       if (e.name && e.name !== 'word') return;
+      boundaryFired = true;
+      clearFallback();
       if (typeof e.charIndex === 'number') revealAndHighlight(wordEls, item.offset + e.charIndex, state);
     };
-    u.onend = next;
-    u.onerror = next;
+    u.onstart = ()=>{
+      // Many voices (often higher-quality cloud/"natural" ones) never fire
+      // onboundary at all. Give real boundary events a brief head start,
+      // then fall back to revealing words on an estimated timer so the text
+      // keeps pace with the narration instead of staying hidden.
+      setTimeout(()=>{
+        if (boundaryFired || gen !== S.match.readGen || itemWordIdxs.length === 0) return;
+        const msPerWord = 60000 / (165 * (S.config.rate || 1));
+        fallbackHandle = setInterval(()=>{
+          if (gen !== S.match.readGen || boundaryFired || fallbackPtr >= itemWordIdxs.length){ clearFallback(); return; }
+          revealIndexUpTo(wordEls, itemWordIdxs[fallbackPtr], state);
+          fallbackPtr++;
+        }, msPerWord);
+      }, 400);
+    };
+    u.onend = ()=>{ clearFallback(); next(); };
+    u.onerror = ()=>{ clearFallback(); next(); };
     speechSynthesis.speak(u);
   }
   next();
@@ -1790,7 +1836,8 @@ function renderQuestionStage(q){
   document.getElementById('kindTag').textContent = q.kind;
   document.getElementById('kindTag').className = 'kind-tag ' + (q.kind==='TOSS-UP'?'toss':'bonus');
   document.getElementById('catTag').textContent = q.category + (q.type ? ' · ' + q.type : '');
-  renderWordSpans(document.getElementById('qtext'), q.question);
+  // Hidden until read — words appear one at a time once reading starts.
+  renderWordSpans(document.getElementById('qtext'), q.question, true);
 }
 
 function startReading(){
@@ -1802,7 +1849,10 @@ function startReading(){
   const ttsSupported = !!window.speechSynthesis;
   if (ttsSupported) speechSynthesis.cancel();
   const gen = ++S.match.readGen;
-  const wordEls = renderWordSpans(document.getElementById('qtext'), q.question, ttsSupported);
+  // Words stay hidden until spoken; playReadingQueue() reveals them in step
+  // with the narration (falling back to an estimated timer for voices that
+  // never fire onboundary — see there).
+  const wordEls = renderWordSpans(document.getElementById('qtext'), q.question, true);
   const queue = buildReadingQueue(q);
 
   function afterAllRead(){
@@ -1876,6 +1926,9 @@ function buzz(team){
   if (m.phase !== 'reading' && m.phase !== 'live') return;
   if (m.lockedTeams.has(team)) return;
   stopSpeaking();
+  // Show the rest of the question immediately so it can still be read/judged
+  // even though narration stopped mid-way.
+  revealAllWordsIn(document.getElementById('qtext'));
   pauseTimer();
   m.phase = 'buzzed';
   m.buzzedTeam = team;
