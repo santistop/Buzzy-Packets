@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 8",
     "source": "Round 8.pdf",
-    "exportedAt": "2026-09-08T17:53:09.591Z"
+    "exportedAt": "2026-09-08T20:51:28.043Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Chemistry",
       "type": "Multiple Choice",
-      "question": "\u0000ROUND:8\u0000\nRound 8\nTOSS-UP\n1) CHEMISTRY – Multiple Choice Gideon performs an organic reaction and isolates a sample\nof the product, which is pure up to stereoisomerism (read: stereo-eye-SAW-murr-ism). He tests the\nsample and finds that it is optically inactive. Which of the following could not be the composition\nof the product?\nW) Mixture of enantiomers (read: en-ANN-tee-oh-murrs)\nX) Mixture of diastereomers (read: dye-uh-STEH-ree-oh-murr)\nY) Single pure enantiomer\nZ) Single pure diastereomer",
+      "question": "Gideon performs an organic reaction and isolates a sample\nof the product, which is pure up to stereoisomerism (read: stereo-eye-SAW-murr-ism). He tests the\nsample and finds that it is optically inactive. Which of the following could not be the composition\nof the product?\nW) Mixture of enantiomers (read: en-ANN-tee-oh-murrs)\nX) Mixture of diastereomers (read: dye-uh-STEH-ree-oh-murr)\nY) Single pure enantiomer\nZ) Single pure diastereomer",
       "answer": "Y) SINGLE PURE ENANTIOMER"
     },
     {
@@ -56,9 +56,9 @@
       "round": 8,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice At which of the following points along a stream\nprofile would you expect to see the most sediment particles moving via saltation?\nW) Headwaters\nX) Floodplain\nY) Delta\nZ) Mouth",
+      "question": "At which of the following points along a stream\nprofile would you expect to see the most sediment particles moving via saltation?\nW) Headwaters\nX) Floodplain\nY) Delta\nZ) Mouth",
       "answer": "W) HEADWATERS"
     },
     {
@@ -67,9 +67,9 @@
       "round": 8,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three phenomena that are\nassociated with an El Niño (read: L-NEEN-yo) event: 1) Weakened Walker circulation; 2) Fewer\nAtlantic hurricanes; 3) Westerly wind bursts.",
+      "question": "Identify all of the following three phenomena that are\nassociated with an El Niño (read: L-NEEN-yo) event: 1) Weakened Walker circulation; 2) Fewer\nAtlantic hurricanes; 3) Westerly wind bursts.",
       "answer": "ALL"
     },
     {
@@ -210,9 +210,9 @@
       "round": 8,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following features would most likely\nhinder thunderstorm development?\nW) High surface humidity\nX) Temperature inversion in lower atmosphere\nY) Strong vertical wind shear\nZ) Converging surface winds",
+      "question": "Which of the following features would most likely\nhinder thunderstorm development?\nW) High surface humidity\nX) Temperature inversion in lower atmosphere\nY) Strong vertical wind shear\nZ) Converging surface winds",
       "answer": "X) TEMPERATURE INVERSION IN LOWER ATMOSPHERE"
     },
     {
@@ -221,9 +221,9 @@
       "round": 8,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice A walrus and a carpenter were walking down\na beach on January 1 at 12am, when they noticed that the water had reached the very top of the\nintertidal zone. Given that this beach has mixed semidiurnal tides, when will sea level next reach\nthis maximum height?\nW) January 1 at 12pm\nX) January 7 at 12pm\nY) January 8 at 12am\nZ) January 15 at 12am",
+      "question": "A walrus and a carpenter were walking down\na beach on January 1 at 12am, when they noticed that the water had reached the very top of the\nintertidal zone. Given that this beach has mixed semidiurnal tides, when will sea level next reach\nthis maximum height?\nW) January 1 at 12pm\nX) January 7 at 12pm\nY) January 8 at 12am\nZ) January 15 at 12am",
       "answer": "Z) JANUARY 15 AT 12AM"
     },
     {
@@ -386,9 +386,9 @@
       "round": 8,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer A red giant has a hundred times the radius and half\nthe temperature of our Sun. What is its luminosity, in solar luminosities?",
+      "question": "A red giant has a hundred times the radius and half\nthe temperature of our Sun. What is its luminosity, in solar luminosities?",
       "answer": "625"
     },
     {
@@ -397,9 +397,9 @@
       "round": 8,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify which of the following three parameters\nthat, when increased, would increase a molecular cloud’s Jeans length: 1) Temperature; 2) Density;\n3) Mean molecular mass.",
+      "question": "Identify which of the following three parameters\nthat, when increased, would increase a molecular cloud’s Jeans length: 1) Temperature; 2) Density;\n3) Mean molecular mass.",
       "answer": "1 ONLY"
     },
     {
@@ -474,9 +474,9 @@
       "round": 8,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Energy",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following is not a significant energy\nsource for Jupiter?\nW) Residual heat from formation\nX) Solar heating\nY) Kelvin-Helmholtz contraction\nZ) Tidal heating",
+      "question": "Which of the following is not a significant energy\nsource for Jupiter?\nW) Residual heat from formation\nX) Solar heating\nY) Kelvin-Helmholtz contraction\nZ) Tidal heating",
       "answer": "Z) TIDAL HEATING"
     },
     {
@@ -485,9 +485,9 @@
       "round": 8,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer A star of apparent magnitude 6 is observed to have\nparallax angle 1 milli-arcsecond. What is its absolute magnitude?",
+      "question": "A star of apparent magnitude 6 is observed to have\nparallax angle 1 milli-arcsecond. What is its absolute magnitude?",
       "answer": "−4"
     },
     {

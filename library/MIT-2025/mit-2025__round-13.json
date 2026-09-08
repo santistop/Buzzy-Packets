@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 13",
     "source": "Round 13.pdf",
-    "exportedAt": "2026-09-08T17:54:54.278Z"
+    "exportedAt": "2026-09-08T20:52:34.136Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Biology",
       "type": "Short Answer",
-      "question": "\u0000ROUND:13\u0000\nRound 13\nTOSS-UP\n1) BIOLOGY – Short Answer In order to translocate electrons from cytosolic NADH made\nduring glycolysis to the electron transport chain, the import of malate into the mitochondrial\nmatrix is coupled with the export of what intermediate formed from the transamination (read:\ntrans-am-uh-NAY-shun) of oxaloacetate (read: ox-ah-low-ASS-uh-tayt)?",
+      "question": "In order to translocate electrons from cytosolic NADH made\nduring glycolysis to the electron transport chain, the import of malate into the mitochondrial\nmatrix is coupled with the export of what intermediate formed from the transamination (read:\ntrans-am-uh-NAY-shun) of oxaloacetate (read: ox-ah-low-ASS-uh-tayt)?",
       "answer": "ASPARTATE VISUAL BONUS"
     },
     {
@@ -100,9 +100,9 @@
       "round": 13,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer David the meterologist is watching radar imagery\nof a dry desert region and sees a strong precipitation signal overhead, yet the ground remains\ncompletely dry. The sky appears streaked beneath the clouds but with no impact on local humidity\nmeasurements. What kind of precipitation phenomena is he observing?",
+      "question": "David the meterologist is watching radar imagery\nof a dry desert region and sees a strong precipitation signal overhead, yet the ground remains\ncompletely dry. The sky appears streaked beneath the clouds but with no impact on local humidity\nmeasurements. What kind of precipitation phenomena is he observing?",
       "answer": "VIRGA (ACCEPT: DRY STORM)"
     },
     {
@@ -111,9 +111,9 @@
       "round": 13,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer In contrast to the r process and s process, which\nprocess is hypothesized to occur accreting binary systems with neutron stars that occurs on the\nproton-rich side of stability instead of the neutron side of stability?",
+      "question": "In contrast to the r process and s process, which\nprocess is hypothesized to occur accreting binary systems with neutron stars that occurs on the\nproton-rich side of stability instead of the neutron side of stability?",
       "answer": "RP-PROCESS (ACCEPT: RAPID PROTON CAPTURE PROCESS)"
     },
     {
@@ -254,9 +254,9 @@
       "round": 13,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three supercontinents from\noldest to youngest: 1) Rodinia; 2) Ur; 3) Pangea.",
+      "question": "Order the following three supercontinents from\noldest to youngest: 1) Rodinia; 2) Ur; 3) Pangea.",
       "answer": "2, 1, 3"
     },
     {
@@ -265,9 +265,9 @@
       "round": 13,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three sites that likely\nexhibit graded bedding: 1) An ancient river delta; 2) An abyssal plain; 3) A shoreline after a period\nof transgression.",
+      "question": "Identify all of the following three sites that likely\nexhibit graded bedding: 1) An ancient river delta; 2) An abyssal plain; 3) A shoreline after a period\nof transgression.",
       "answer": "ALL"
     },
     {
@@ -298,9 +298,9 @@
       "round": 13,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Soft gamma ray repeaters are hypothesized to result\nfrom the occurrence of starquakes on what specific type of pulsars?",
+      "question": "Soft gamma ray repeaters are hypothesized to result\nfrom the occurrence of starquakes on what specific type of pulsars?",
       "answer": "MAGNETARS VISUAL BONUS"
     },
     {
@@ -309,9 +309,9 @@
       "round": 13,
       "kind": "BONUS",
       "kindWarn": true,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Your next bonus is visual. Answer the following\ntwo questions about this constellation: 1) What is the common name of its brightest star? 2) In\nwhat month does that star culminate around midnight?",
+      "question": "Your next bonus is visual. Answer the following\ntwo questions about this constellation: 1) What is the common name of its brightest star? 2) In\nwhat month does that star culminate around midnight?",
       "answer": "1) REGULUS; 2) FEBRUARY"
     },
     {
@@ -518,9 +518,9 @@
       "round": 13,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice The Encke gap of Saturn’s E ring is home to\nwhich shepherd moon?\nW) Mimas\nX) Titan\nY) Pan\nZ) Enceladus",
+      "question": "The Encke gap of Saturn’s E ring is home to\nwhich shepherd moon?\nW) Mimas\nX) Titan\nY) Pan\nZ) Enceladus",
       "answer": "Y) PAN"
     },
     {
@@ -529,9 +529,9 @@
       "round": 13,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer The cooling of neutron stars and white dwarfs can\nbe attributed to the emission of neutrinos in what process?",
+      "question": "The cooling of neutron stars and white dwarfs can\nbe attributed to the emission of neutrinos in what process?",
       "answer": "URCA PROCESS"
     },
     {

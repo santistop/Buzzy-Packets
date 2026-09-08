@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 9",
     "source": "Round 9.pdf",
-    "exportedAt": "2026-09-08T17:53:23.043Z"
+    "exportedAt": "2026-09-08T20:51:41.166Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Chemistry",
       "type": "Short Answer",
-      "question": "\u0000ROUND:9\u0000\nRound 9\nTOSS-UP\n1) CHEMISTRY – Short Answer In iodine heptafluoride, what is the bond angle in degrees\nbetween adjacent equatorial fluorine atoms?",
+      "question": "In iodine heptafluoride, what is the bond angle in degrees\nbetween adjacent equatorial fluorine atoms?",
       "answer": "72"
     },
     {
@@ -100,9 +100,9 @@
       "round": 9,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following soil horizons is the most\nlikely to contain high levels of kaolinite?\nW) O\nX) A\nY) E\nZ) B",
+      "question": "Which of the following soil horizons is the most\nlikely to contain high levels of kaolinite?\nW) O\nX) A\nY) E\nZ) B",
       "answer": "Z) B"
     },
     {
@@ -111,9 +111,9 @@
       "round": 9,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Rank the following four greenhouse gases by increas-\ning 100-year global warming potential: 1) Carbon dioxide; 2) Methane; 3) Water vapor; 4) Nitrous\noxide.",
+      "question": "Rank the following four greenhouse gases by increas-\ning 100-year global warming potential: 1) Carbon dioxide; 2) Methane; 3) Water vapor; 4) Nitrous\noxide.",
       "answer": "3, 1, 2, 4"
     },
     {
@@ -188,9 +188,9 @@
       "round": 9,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Mick is taking a rare walk outside and sees that\nthe sun has been dulled into a dot with no halo. Which of the following clouds is most likely\nresponsible for this?\nW) Cirrus\nX) Cirrostratus\nY) Altostratus\nZ) Nimbostratus",
+      "question": "Mick is taking a rare walk outside and sees that\nthe sun has been dulled into a dot with no halo. Which of the following clouds is most likely\nresponsible for this?\nW) Cirrus\nX) Cirrostratus\nY) Altostratus\nZ) Nimbostratus",
       "answer": "Y) ALTOSTRATUS"
     },
     {
@@ -199,9 +199,9 @@
       "round": 9,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Greenschist is green because it contains high levels\nof what phyllosilicate mineral that is also common in low-grade metamorphic rocks like phyllite?",
+      "question": "Greenschist is green because it contains high levels\nof what phyllosilicate mineral that is also common in low-grade metamorphic rocks like phyllite?",
       "answer": "CHLORITE"
     },
     {
@@ -364,9 +364,9 @@
       "round": 9,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice The end of a protostar’s evolution along the\nHayashi track is marked by what event?\nW) Nuclear fusion of helium-3 begins\nX) Formation of a radiative core\nY) Formation of bipolar outflows\nZ) Kelvin-Helmholtz contraction ceases",
+      "question": "The end of a protostar’s evolution along the\nHayashi track is marked by what event?\nW) Nuclear fusion of helium-3 begins\nX) Formation of a radiative core\nY) Formation of bipolar outflows\nZ) Kelvin-Helmholtz contraction ceases",
       "answer": "X) FORMATION OF A RADIATIVE CORE"
     },
     {
@@ -375,9 +375,9 @@
       "round": 9,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer The radii of the Moon and the Earth both double at\nconstant density, while their average separation distance remains unchanged. By what factor does\nthe average height of the ocean’s tides change?",
+      "question": "The radii of the Moon and the Earth both double at\nconstant density, while their average separation distance remains unchanged. By what factor does\nthe average height of the ocean’s tides change?",
       "answer": "16"
     },
     {
@@ -452,9 +452,9 @@
       "round": 9,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following characteristics is most\nsimilar between Kuiper belt objects and scattered disk objects?\nW) Orbital period\nX) Perihelion distance\nY) Orbital eccentricity\nZ) Orbital inclination",
+      "question": "Which of the following characteristics is most\nsimilar between Kuiper belt objects and scattered disk objects?\nW) Orbital period\nX) Perihelion distance\nY) Orbital eccentricity\nZ) Orbital inclination",
       "answer": "X) PERIHELION DISTANCE"
     },
     {
@@ -463,9 +463,9 @@
       "round": 9,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice At which of the following redshift values would\nyou be most likely to spot a quasar?\nW) 0.5\nX) 2\nY) 6\nZ) 20",
+      "question": "At which of the following redshift values would\nyou be most likely to spot a quasar?\nW) 0.5\nX) 2\nY) 6\nZ) 20",
       "answer": "X) 2"
     },
     {

@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 3",
     "source": "Round 3.pdf",
-    "exportedAt": "2026-09-08T17:51:15.725Z"
+    "exportedAt": "2026-09-08T20:48:10.007Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Chemistry",
       "type": "Multiple Choice",
-      "question": "\u0000ROUND:3\u0000\nRound 3\nTOSS-UP\n1) CHEMISTRY – Multiple Choice Which of the following bonds has the most ionic character?\nW) Potassium fluoride\nX) Potassium chloride\nY) Rubidium fluoride\nZ) Rubidium chloride",
+      "question": "Which of the following bonds has the most ionic character?\nW) Potassium fluoride\nX) Potassium chloride\nY) Rubidium fluoride\nZ) Rubidium chloride",
       "answer": "Y) RUBIDIUM FLUORIDE"
     },
     {
@@ -34,9 +34,9 @@
       "round": 3,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer El Niño involves a weakening of what prevailing\nglobal wind belts that blow between 0 and 30 degrees latitude?",
+      "question": "El Niño involves a weakening of what prevailing\nglobal wind belts that blow between 0 and 30 degrees latitude?",
       "answer": "TRADE WINDS (ACCEPT: EASTERLIES)"
     },
     {
@@ -45,9 +45,9 @@
       "round": 3,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Rank the following three structures in order of\nincreasing crustal thickness: 1) Continental shield; 2) Oceanic crust; 3) Mountain.",
+      "question": "Rank the following three structures in order of\nincreasing crustal thickness: 1) Continental shield; 2) Oceanic crust; 3) Mountain.",
       "answer": "2, 1, 3"
     },
     {
@@ -166,9 +166,9 @@
       "round": 3,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following statements regarding a\nglacier would be correct if a medial moraine is observed on the glacier?\nW) The glacier has at least one tributary glacier\nX) The glacier is a piedmont glacier\nY) The glacier is melting rapidly\nZ) The glacier has experienced at least one icefall along its path",
+      "question": "Which of the following statements regarding a\nglacier would be correct if a medial moraine is observed on the glacier?\nW) The glacier has at least one tributary glacier\nX) The glacier is a piedmont glacier\nY) The glacier is melting rapidly\nZ) The glacier has experienced at least one icefall along its path",
       "answer": "W) THE GLACIER HAS AT LEAST ONE TRIBUTARY GLACIER"
     },
     {
@@ -177,9 +177,9 @@
       "round": 3,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Rank the following three soil horizons in order of\nlowest to highest concentration of organic material: 1) B; 2) O; 3) E.",
+      "question": "Rank the following three soil horizons in order of\nlowest to highest concentration of organic material: 1) B; 2) O; 3) E.",
       "answer": "3, 1, 2"
     },
     {
@@ -276,9 +276,9 @@
       "round": 3,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Where on an H-R diagram would a fully convec-\ntive star be expected to be found?\nW) Top right\nX) Top left\nY) Bottom right\nZ) Bottom left",
+      "question": "Where on an H-R diagram would a fully convec-\ntive star be expected to be found?\nW) Top right\nX) Top left\nY) Bottom right\nZ) Bottom left",
       "answer": "Y) BOTTOM RIGHT"
     },
     {
@@ -287,9 +287,9 @@
       "round": 3,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Jess lives on the Tropic of Cancer, at 23.5 degrees\nnorth. In degrees, what is the minimum declination a star must have for her to observe it as\ncircumpolar?",
+      "question": "Jess lives on the Tropic of Cancer, at 23.5 degrees\nnorth. In degrees, what is the minimum declination a star must have for her to observe it as\ncircumpolar?",
       "answer": "66.5"
     },
     {
@@ -496,9 +496,9 @@
       "round": 3,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following is not a piece of evidence\nsupporting the hypothesis that Triton was captured by Neptune after formation?\nW) Triton’s retrograde orbit\nX) Triton’s similarity in composition to S-type asteroids\nY) Triton’s high orbital inclination\nZ) Nereid’s (read: near-e-ids) high orbital eccentricity",
+      "question": "Which of the following is not a piece of evidence\nsupporting the hypothesis that Triton was captured by Neptune after formation?\nW) Triton’s retrograde orbit\nX) Triton’s similarity in composition to S-type asteroids\nY) Triton’s high orbital inclination\nZ) Nereid’s (read: near-e-ids) high orbital eccentricity",
       "answer": "X) TRITON’S SIMILARITY IN COMPOSITION TO S-TYPE ASTEROIDS"
     },
     {
@@ -507,9 +507,9 @@
       "round": 3,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Energy",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice What energy transfer phenomena induces the\nformation of granules in the sun’s photosphere?\nW) Conduction\nX) Convection\nY) Radiation\nZ) Thermal diffusion",
+      "question": "What energy transfer phenomena induces the\nformation of granules in the sun’s photosphere?\nW) Conduction\nX) Convection\nY) Radiation\nZ) Thermal diffusion",
       "answer": "X) CONVECTION"
     },
     {

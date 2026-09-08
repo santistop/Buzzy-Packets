@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 12",
     "source": "Round 12.pdf",
-    "exportedAt": "2026-09-08T17:54:24.929Z"
+    "exportedAt": "2026-09-08T20:52:20.313Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Mathematics",
       "type": "Short Answer",
-      "question": "\u0000ROUND:12\u0000\nRound 12\nTOSS-UP\n1) MATH – Short Answer Identify all of the following three values for positive integer 𝑛 such\nthat the equation 𝑥𝑛 = 2025 has exactly 10 distinct non-real roots: 1) 10; 2) 11; 3) 12.",
+      "question": "Identify all of the following three values for positive integer 𝑛 such\nthat the equation 𝑥𝑛 = 2025 has exactly 10 distinct non-real roots: 1) 10; 2) 11; 3) 12.",
       "answer": "2 AND 3"
     },
     {
@@ -100,9 +100,9 @@
       "round": 12,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer What phenomenon occurs when adjacent crystals of\na mineral share lattice points, causing them to grow in a symmetric manner?",
+      "question": "What phenomenon occurs when adjacent crystals of\na mineral share lattice points, causing them to grow in a symmetric manner?",
       "answer": "CRYSTAL TWINNING"
     },
     {
@@ -111,9 +111,9 @@
       "round": 12,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Although fluvial sediment transport ends at the\nmouth of a river, submarine fans may continue to transport terrigenous sediment hundreds of\nkilometers away from their associated river deltas. Which of the following best explains how\nsubmarine fans transport sediment?\nW) Remanent river currents on the ocean floor continue to propagate sediment outwards\nX) Oceanic currents pick up river sediment and preserve their buoyancy until they eventually settle\nout\nY) Water-saturated sediment is denser than oceanic water and causes underwater landslides that\ncarry sediment away from the river delta\nZ) Earthquakes cause instability in the submarine fan, causing sediment to lurch downslope",
+      "question": "Although fluvial sediment transport ends at the\nmouth of a river, submarine fans may continue to transport terrigenous sediment hundreds of\nkilometers away from their associated river deltas. Which of the following best explains how\nsubmarine fans transport sediment?\nW) Remanent river currents on the ocean floor continue to propagate sediment outwards\nX) Oceanic currents pick up river sediment and preserve their buoyancy until they eventually settle\nout\nY) Water-saturated sediment is denser than oceanic water and causes underwater landslides that\ncarry sediment away from the river delta\nZ) Earthquakes cause instability in the submarine fan, causing sediment to lurch downslope",
       "answer": "Y) WATER-SATURATED SEDIMENT IS DENSER THAN OCEANIC WATER AND CAUSES UNDERWATER LANDSLIDES THAT CARRY SEDIMENT AWAY FROM THE RIVER DELTA"
     },
     {
@@ -210,9 +210,9 @@
       "round": 12,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following best describes the most\nsignificant contribution of the 1883 eruption of Krakatoa to the global climate over the following\nyear?\nW) Dark carbon aerosols absorbed sunlight, raising temperatures\nX) Greenhouse gases trapped infrared radiation, raising temperatures\nY) Ash blotted out the Sun, lowering temperatures\nZ) Sulfuric acid promoted cloud formation, lowering temperatures",
+      "question": "Which of the following best describes the most\nsignificant contribution of the 1883 eruption of Krakatoa to the global climate over the following\nyear?\nW) Dark carbon aerosols absorbed sunlight, raising temperatures\nX) Greenhouse gases trapped infrared radiation, raising temperatures\nY) Ash blotted out the Sun, lowering temperatures\nZ) Sulfuric acid promoted cloud formation, lowering temperatures",
       "answer": "Z) SULFURIC ACID PROMOTED CLOUD FORMATION, LOWERING TEMPER- ATURES"
     },
     {
@@ -221,9 +221,9 @@
       "round": 12,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer What type of volcanic eruption does not occur due\nto movement of magma, but rather groundwater coming in contact with magma and flashing to\nsteam?",
+      "question": "What type of volcanic eruption does not occur due\nto movement of magma, but rather groundwater coming in contact with magma and flashing to\nsteam?",
       "answer": "PHREATIC ERUPTION (ACCEPT: STEAM BLAST ERUPTION, ULTRAVULCA- NIAN ERUPTION)"
     },
     {
@@ -320,9 +320,9 @@
       "round": 12,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following, in Kelvin, is closest to\nthe average temperature of a Herbig-Haro Object?\nW) 10,000\nX) 100,000\nY) 1,000,000\nZ) 10,000,000",
+      "question": "Which of the following, in Kelvin, is closest to\nthe average temperature of a Herbig-Haro Object?\nW) 10,000\nX) 100,000\nY) 1,000,000\nZ) 10,000,000",
       "answer": "W) 10,000"
     },
     {
@@ -331,9 +331,9 @@
       "round": 12,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer The Hilda asteroids share an orbital resonance with\nJupiter and visit the L3, L4, and L5 lagrange points between Jupiter and the Sun at their aphelion.\nWhat is the ratio of the orbital period of Hilda asteroids with respect to Jupiter’s orbital period?",
+      "question": "The Hilda asteroids share an orbital resonance with\nJupiter and visit the L3, L4, and L5 lagrange points between Jupiter and the Sun at their aphelion.\nWhat is the ratio of the orbital period of Hilda asteroids with respect to Jupiter’s orbital period?",
       "answer": "3:2"
     },
     {
@@ -474,9 +474,9 @@
       "round": 12,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which planet in our solar system has the largest\nHill sphere?\nW) Earth\nX) Mars\nY) Uranus\nZ) Neptune",
+      "question": "Which planet in our solar system has the largest\nHill sphere?\nW) Earth\nX) Mars\nY) Uranus\nZ) Neptune",
       "answer": "Z) NEPTUNE"
     },
     {
@@ -485,9 +485,9 @@
       "round": 12,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three luminosity relations\nthat are correctly paired with their respective galaxy type: 1) Faber–Jackson relation, elliptical; 2)\nTully–Fisher relation, spiral; 3) M–sigma relation, irregular.",
+      "question": "Identify all of the following three luminosity relations\nthat are correctly paired with their respective galaxy type: 1) Faber–Jackson relation, elliptical; 2)\nTully–Fisher relation, spiral; 3) M–sigma relation, irregular.",
       "answer": "1 AND 2"
     },
     {

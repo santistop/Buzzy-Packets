@@ -2,8 +2,8 @@
   "meta": {
     "competition": "MIT 2025",
     "round": "Round 2",
-    "source": "MIT-2025-Round2.pdf",
-    "exportedAt": "2026-09-08T17:48:07.024Z"
+    "source": "Round 2.pdf",
+    "exportedAt": "2026-09-08T20:47:55.106Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Physics",
       "type": "Short Answer",
-      "question": "\u0000ROUND:2\u0000\nRound 2\nTOSS-UP\n1) PHYSICS – Short Answer A circuit consists of an ideal 12-volt battery connected to an ideal\n72-ohm resistor. In watts, what is the power dissipated by the circuit?",
+      "question": "A circuit consists of an ideal 12-volt battery connected to an ideal\n72-ohm resistor. In watts, what is the power dissipated by the circuit?",
       "answer": "2"
     },
     {
@@ -34,9 +34,9 @@
       "round": 2,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Temperature increases with height in the stratosphere\ndue to the presence of what UV-absorbing molecule?",
+      "question": "Temperature increases with height in the stratosphere\ndue to the presence of what UV-absorbing molecule?",
       "answer": "OZONE"
     },
     {
@@ -45,9 +45,9 @@
       "round": 2,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three processes that\nwould decrease the strength of a tropical halocline: 1) River run-off; 2) Converging storms; 3)\nCoastal upwelling.",
+      "question": "Identify all of the following three processes that\nwould decrease the strength of a tropical halocline: 1) River run-off; 2) Converging storms; 3)\nCoastal upwelling.",
       "answer": "ALL"
     },
     {
@@ -188,9 +188,9 @@
       "round": 2,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following minerals is a silicate?\nW) Pyrite\nX) Calcite\nY) Muscovite\nZ) Sphalerite",
+      "question": "Which of the following minerals is a silicate?\nW) Pyrite\nX) Calcite\nY) Muscovite\nZ) Sphalerite",
       "answer": "Y) MUSCOVITE"
     },
     {
@@ -199,9 +199,9 @@
       "round": 2,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer What term describes the upward movement of the\nlithosphere in recently deglaciated regions?",
+      "question": "What term describes the upward movement of the\nlithosphere in recently deglaciated regions?",
       "answer": "ISOSTATIC REBOUND (ACCEPT: POST-GLACIAL REBOUND, CRUSTAL RE- BOUND, DO NOT ACCEPT: GRAVITY)"
     },
     {
@@ -386,9 +386,9 @@
       "round": 2,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following statements about Type Ia\n(read: type one-A) supernovae is not true?\nW) Type Ia supernovae spectra exhibit strong hydrogen lines\nX) Type Ia supernovae can be used as standard candles\nY) Type Ia supernovae occur when the mass of white dwarves exceeds about 1.44 solar masses\nZ) Type Ia supernovae often occur in binary star systems",
+      "question": "Which of the following statements about Type Ia\n(read: type one-A) supernovae is not true?\nW) Type Ia supernovae spectra exhibit strong hydrogen lines\nX) Type Ia supernovae can be used as standard candles\nY) Type Ia supernovae occur when the mass of white dwarves exceeds about 1.44 solar masses\nZ) Type Ia supernovae often occur in binary star systems",
       "answer": "W) TYPE IA SUPERNOVAE SPECTRA EXHIBIT STRONG HYDROGEN LINES"
     },
     {
@@ -397,9 +397,9 @@
       "round": 2,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three regions of the Milky Way\ngalaxy by increasing concentration of population II stars: 1) Bulge; 2) Disk; 3) Halo.",
+      "question": "Order the following three regions of the Milky Way\ngalaxy by increasing concentration of population II stars: 1) Bulge; 2) Disk; 3) Halo.",
       "answer": "2, 1, 3"
     },
     {
@@ -496,9 +496,9 @@
       "round": 2,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Which two elements dominate the composition of\nM-type asteroids?",
+      "question": "Which two elements dominate the composition of\nM-type asteroids?",
       "answer": "IRON, NICKEL (ACCEPT: FE, NI)"
     },
     {
@@ -507,9 +507,9 @@
       "round": 2,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice In which of the following locations would one be\nmost likely to find Bok globules?\nW) An open cluster\nX) A globular cluster\nY) A star-forming nebula\nZ) A supernova remnant",
+      "question": "In which of the following locations would one be\nmost likely to find Bok globules?\nW) An open cluster\nX) A globular cluster\nY) A star-forming nebula\nZ) A supernova remnant",
       "answer": "Y) A STAR-FORMING NEBULA"
     },
     {

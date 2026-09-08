@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 7",
     "source": "Round 7.pdf",
-    "exportedAt": "2026-09-08T17:52:49.762Z"
+    "exportedAt": "2026-09-08T20:51:08.828Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Biology",
       "type": "Multiple Choice",
-      "question": "\u0000ROUND:7\u0000\nRound 7\nTOSS-UP\n1) BIOLOGY – Multiple Choice Which of the following sources of DNA would be MOST\nuseful for comparing distantly related species of invertebrates?\nW) Mitochondrial DNA\nX) Hemoglobin alpha gene\nY) lac repressor gene\nZ) MADS box gene",
+      "question": "Which of the following sources of DNA would be MOST\nuseful for comparing distantly related species of invertebrates?\nW) Mitochondrial DNA\nX) Hemoglobin alpha gene\nY) lac repressor gene\nZ) MADS box gene",
       "answer": "W) MITOCHONDRIAL DNA"
     },
     {
@@ -78,9 +78,9 @@
       "round": 7,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following Milankovitch (read: muh-\nLAHNG-kuh-vitch) cycles is the shortest on Earth?\nW) Axial tilt\nX) Axial precession\nY) Eccentricity\nZ) Apsidal precession",
+      "question": "Which of the following Milankovitch (read: muh-\nLAHNG-kuh-vitch) cycles is the shortest on Earth?\nW) Axial tilt\nX) Axial precession\nY) Eccentricity\nZ) Apsidal precession",
       "answer": "X) AXIAL PRECESSION"
     },
     {
@@ -89,9 +89,9 @@
       "round": 7,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following minerals is a framework\nsilicate?\nW) Olivine (read: olive-een)\nX) Quartz\nY) Muscovite\nZ) Amphibole",
+      "question": "Which of the following minerals is a framework\nsilicate?\nW) Olivine (read: olive-een)\nX) Quartz\nY) Muscovite\nZ) Amphibole",
       "answer": "X) QUARTZ"
     },
     {
@@ -232,9 +232,9 @@
       "round": 7,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following geologic features forms\nunder compressional stress?\nW) Normal fault\nX) Horst\nY) Syncline\nZ) Rift valley",
+      "question": "Which of the following geologic features forms\nunder compressional stress?\nW) Normal fault\nX) Horst\nY) Syncline\nZ) Rift valley",
       "answer": "Y) SYNCLINE"
     },
     {
@@ -243,9 +243,9 @@
       "round": 7,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer What term describes the diapiric (read: dye-uh-\nPEER-ic) structures made primarily of evaporites which are heavily exploited in the Gulf of\nMexico as they act as petroleum traps?",
+      "question": "What term describes the diapiric (read: dye-uh-\nPEER-ic) structures made primarily of evaporites which are heavily exploited in the Gulf of\nMexico as they act as petroleum traps?",
       "answer": "SALT DOMES"
     },
     {
@@ -320,9 +320,9 @@
       "round": 7,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice The main sequence turnoff point of Omega\nCentauri, the Milky Way’s most massive globular cluster, has which Harvard spectral classification?\nW) O\nX) A\nY) G\nZ) M",
+      "question": "The main sequence turnoff point of Omega\nCentauri, the Milky Way’s most massive globular cluster, has which Harvard spectral classification?\nW) O\nX) A\nY) G\nZ) M",
       "answer": "Y) G"
     },
     {
@@ -331,9 +331,9 @@
       "round": 7,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Kordylewski clouds are objects found at the L4\nLagrange point of the Earth and what other object?\nW) Venus\nX) Jupiter\nY) Saturn\nZ) The Moon",
+      "question": "Kordylewski clouds are objects found at the L4\nLagrange point of the Earth and what other object?\nW) Venus\nX) Jupiter\nY) Saturn\nZ) The Moon",
       "answer": "Z) THE MOON"
     },
     {
@@ -474,9 +474,9 @@
       "round": 7,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following star types would most\nlikely produce a type Ib (read: one bee) supernova?\nW) Wolf-Rayet (read: wolf RAY-ett)\nX) Carbon\nY) Cepheid (read: SEE-fee-id)\nZ) Red Supergiant",
+      "question": "Which of the following star types would most\nlikely produce a type Ib (read: one bee) supernova?\nW) Wolf-Rayet (read: wolf RAY-ett)\nX) Carbon\nY) Cepheid (read: SEE-fee-id)\nZ) Red Supergiant",
       "answer": "W) WOLF-RAYET (READ: WOLF RAY-ETT)"
     },
     {
@@ -485,9 +485,9 @@
       "round": 7,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer A space-based telescope with negligible dark current\nand read noise takes an image with exposure time ten thousand seconds and limiting magnitude 10.\nIf the exposure time is increased to one million seconds, what is the new limiting magnitude?",
+      "question": "A space-based telescope with negligible dark current\nand read noise takes an image with exposure time ten thousand seconds and limiting magnitude 10.\nIf the exposure time is increased to one million seconds, what is the new limiting magnitude?",
       "answer": "12.5"
     },
     {

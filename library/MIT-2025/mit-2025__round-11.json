@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 11",
     "source": "Round 11.pdf",
-    "exportedAt": "2026-09-08T17:54:02.394Z"
+    "exportedAt": "2026-09-08T20:52:05.743Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Energy",
       "type": "Short Answer",
-      "question": "\u0000ROUND:11\u0000\nRound 11\nTOSS-UP\n1) ENERGY – Short Answer Researchers at MIT’s Picower Institute have been studying the\nglymphatic system, a system similar to the function of the lymphatic system for circulating cere-\nbrospinal fluid. In addition to neurons, the glymphatic system relies on what general types of cells\nto produce and circulate the CSF?",
+      "question": "Researchers at MIT’s Picower Institute have been studying the\nglymphatic system, a system similar to the function of the lymphatic system for circulating cere-\nbrospinal fluid. In addition to neurons, the glymphatic system relies on what general types of cells\nto produce and circulate the CSF?",
       "answer": "EPENDYMAL CELLS"
     },
     {
@@ -56,9 +56,9 @@
       "round": 11,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following rocks would be most\nexpected to be formed near the surface along a hotspot track?\nW) Skarn\nX) Eclogite [eck-luh-jite]\nY) Blueschist [blue-shist]\nZ) Gneiss [nice]",
+      "question": "Which of the following rocks would be most\nexpected to be formed near the surface along a hotspot track?\nW) Skarn\nX) Eclogite [eck-luh-jite]\nY) Blueschist [blue-shist]\nZ) Gneiss [nice]",
       "answer": "W) SKARN"
     },
     {
@@ -67,9 +67,9 @@
       "round": 11,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Alice is a volcanologist sampling lava from a\npahoehoe lava flow. What should she expect its silica content and volatile content to be, respectively,\nrelative to ash samples gathered from a Plinian eruption?\nW) Higher, higher\nX) Higher, lower\nY) Lower, higher\nZ) Lower, lower",
+      "question": "Alice is a volcanologist sampling lava from a\npahoehoe lava flow. What should she expect its silica content and volatile content to be, respectively,\nrelative to ash samples gathered from a Plinian eruption?\nW) Higher, higher\nX) Higher, lower\nY) Lower, higher\nZ) Lower, lower",
       "answer": "Y) LOWER, HIGHER"
     },
     {
@@ -144,9 +144,9 @@
       "round": 11,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer In which layer of Earth’s atmosphere are nacreous\n[neigh-cree-iss] clouds most commonly observed?",
+      "question": "In which layer of Earth’s atmosphere are nacreous\n[neigh-cree-iss] clouds most commonly observed?",
       "answer": "STRATOSPHERE"
     },
     {
@@ -155,9 +155,9 @@
       "round": 11,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three characteristics of\nhurricanes which, due to climate change, are currently increasing on a global scale: 1) Annual\nfrequency; 2) Average wind speed; 3) Average amount of precipitation.",
+      "question": "Identify all of the following three characteristics of\nhurricanes which, due to climate change, are currently increasing on a global scale: 1) Annual\nfrequency; 2) Average wind speed; 3) Average amount of precipitation.",
       "answer": "2 AND 3"
     },
     {
@@ -364,9 +364,9 @@
       "round": 11,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer A star is observed with peak wavelength 300 nanome-\nters. To one significant figure, what is its temperature in Kelvin?",
+      "question": "A star is observed with peak wavelength 300 nanome-\nters. To one significant figure, what is its temperature in Kelvin?",
       "answer": "10,000"
     },
     {
@@ -375,9 +375,9 @@
       "round": 11,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer A black hole’s mass is instantaneously decreased by\na factor of 5. By what factor does its luminosity instantaneously increase?",
+      "question": "A black hole’s mass is instantaneously decreased by\na factor of 5. By what factor does its luminosity instantaneously increase?",
       "answer": "25"
     },
     {
@@ -518,9 +518,9 @@
       "round": 11,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three structures which,\nby mass, are primarily composed of water ice: 1) The rings of Jupiter; 2) The rings of Saturn; 3)\nThe lakes of Titan.",
+      "question": "Identify all of the following three structures which,\nby mass, are primarily composed of water ice: 1) The rings of Jupiter; 2) The rings of Saturn; 3)\nThe lakes of Titan.",
       "answer": "2 ONLY"
     },
     {
@@ -529,9 +529,9 @@
       "round": 11,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following is closest to the ratio\nbetween the volumes of Olympus Mons on Mars and Mauna Loa on Earth?\nW) 1\nX) 10\nY) 100\nZ) 1000",
+      "question": "Which of the following is closest to the ratio\nbetween the volumes of Olympus Mons on Mars and Mauna Loa on Earth?\nW) 1\nX) 10\nY) 100\nZ) 1000",
       "answer": "Y) 100"
     },
     {

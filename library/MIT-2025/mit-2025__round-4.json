@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 4",
     "source": "Round 4.pdf",
-    "exportedAt": "2026-09-08T17:51:38.259Z"
+    "exportedAt": "2026-09-08T20:48:32.604Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Physics",
       "type": "Multiple Choice",
-      "question": "\u0000ROUND:4\u0000\nRound 4\nTOSS-UP\n1) PHYSICS – Multiple Choice Students in East Campus are spray-painting the walls of their\ndorm. After the paint hits and sticks to a wall, which of the following best describes where the\nmajority of the momentum and kinetic energy of the paint are transferred to, respectively?\nW) In the paint and released as heat\nX) In the paint and in the Earth\nY) In the Earth and released as heat\nZ) In the Earth and in the Earth",
+      "question": "Students in East Campus are spray-painting the walls of their\ndorm. After the paint hits and sticks to a wall, which of the following best describes where the\nmajority of the momentum and kinetic energy of the paint are transferred to, respectively?\nW) In the paint and released as heat\nX) In the paint and in the Earth\nY) In the Earth and released as heat\nZ) In the Earth and in the Earth",
       "answer": "Y) IN THE EARTH AND RELEASED AS HEAT"
     },
     {
@@ -122,9 +122,9 @@
       "round": 4,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following best describes what happens\nto P waves and S waves, respectively, when they encounter the outer core?\nW) P waves are stopped, S waves are stopped\nX) P waves are stopped, S waves are refracted\nY) P waves are refracted, S waves are stopped\nZ) P waves are refracted, S waves are refracted",
+      "question": "Which of the following best describes what happens\nto P waves and S waves, respectively, when they encounter the outer core?\nW) P waves are stopped, S waves are stopped\nX) P waves are stopped, S waves are refracted\nY) P waves are refracted, S waves are stopped\nZ) P waves are refracted, S waves are refracted",
       "answer": "Y) P WAVES ARE REFRACTED, S WAVES ARE STOPPED"
     },
     {
@@ -133,9 +133,9 @@
       "round": 4,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three settings where\nmagma is mainly formed by decompression melting: 1) Subduction zone; 2) Continental rift; 3)\nRising mantle plume.",
+      "question": "Identify all of the following three settings where\nmagma is mainly formed by decompression melting: 1) Subduction zone; 2) Continental rift; 3)\nRising mantle plume.",
       "answer": "2 AND 3"
     },
     {
@@ -254,9 +254,9 @@
       "round": 4,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following best describes the forma-\ntion of an occluded front?\nW) A cold front overtakes a warm front\nX) A warm front overtakes a cold front\nY) A cold front overtakes a cold front\nZ) A warm front overtakes a warm front",
+      "question": "Which of the following best describes the forma-\ntion of an occluded front?\nW) A cold front overtakes a warm front\nX) A warm front overtakes a cold front\nY) A cold front overtakes a cold front\nZ) A warm front overtakes a warm front",
       "answer": "W) A COLD FRONT OVERTAKES A WARM FRONT"
     },
     {
@@ -265,9 +265,9 @@
       "round": 4,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three coastal landforms\nthat require wave refraction to form: 1) Marine terrace; 2) Barrier island; 3) Sea arch.",
+      "question": "Identify all of the following three coastal landforms\nthat require wave refraction to form: 1) Marine terrace; 2) Barrier island; 3) Sea arch.",
       "answer": "3 ONLY"
     },
     {
@@ -386,9 +386,9 @@
       "round": 4,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Io’s bright colouration is primarily caused by\nallotropes of which element?\nW) Sulfur\nX) Phosphorus\nY) Iron\nZ) Carbon",
+      "question": "Io’s bright colouration is primarily caused by\nallotropes of which element?\nW) Sulfur\nX) Phosphorus\nY) Iron\nZ) Carbon",
       "answer": "W) SULFUR"
     },
     {
@@ -397,9 +397,9 @@
       "round": 4,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following is closest to the time in\nyears a one solar-mass star spends on the red giant branch?\nW) 1 million\nX) 10 million\nY) 100 million\nZ) 1 billion",
+      "question": "Which of the following is closest to the time in\nyears a one solar-mass star spends on the red giant branch?\nW) 1 million\nX) 10 million\nY) 100 million\nZ) 1 billion",
       "answer": "Z) 1 BILLION"
     },
     {
@@ -474,9 +474,9 @@
       "round": 4,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice The detection of electromagnetic radiation of\nwhich of the following wavelengths would be most impaired by high humidity conditions?\nW) 1 millimeter\nX) 1 centimeter\nY) 1 decimeter\nZ) 1 meter",
+      "question": "The detection of electromagnetic radiation of\nwhich of the following wavelengths would be most impaired by high humidity conditions?\nW) 1 millimeter\nX) 1 centimeter\nY) 1 decimeter\nZ) 1 meter",
       "answer": "W) 1 MILLIMETER"
     },
     {
@@ -485,9 +485,9 @@
       "round": 4,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Which of the following best describes how an E7\ngalaxy differs from an E0 galaxy?\nW) It is more elongated\nX) It has a higher B-V index\nY) It is more massive\nZ) It has higher metallicity",
+      "question": "Which of the following best describes how an E7\ngalaxy differs from an E0 galaxy?\nW) It is more elongated\nX) It has a higher B-V index\nY) It is more massive\nZ) It has higher metallicity",
       "answer": "W) IT IS MORE ELONGATED"
     },
     {

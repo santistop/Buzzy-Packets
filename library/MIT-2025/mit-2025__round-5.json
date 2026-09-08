@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 5",
     "source": "Round 5.pdf",
-    "exportedAt": "2026-09-08T17:52:03.292Z"
+    "exportedAt": "2026-09-08T20:49:06.915Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Biology",
       "type": "Multiple Choice",
-      "question": "\u0000ROUND:5\u0000\nRound 5\nTOSS-UP\n1) BIOLOGY – Multiple Choice Which of the following states would lead to the highest\nexpression of lac operon?\nW) High lactose, high glucose\nX) High lactose, low glucose\nY) Low lactose, high glucose\nZ) Low lactose, low glucose",
+      "question": "Which of the following states would lead to the highest\nexpression of lac operon?\nW) High lactose, high glucose\nX) High lactose, low glucose\nY) Low lactose, high glucose\nZ) Low lactose, low glucose",
       "answer": "X) HIGH LACTOSE, LOW GLUCOSE"
     },
     {
@@ -122,9 +122,9 @@
       "round": 5,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice In which season of the Northern Hemisphere do\natmospheric carbon dioxide concentrations typically peak?\nW) Winter\nX) Spring\nY) Summer\nZ) Fall",
+      "question": "In which season of the Northern Hemisphere do\natmospheric carbon dioxide concentrations typically peak?\nW) Winter\nX) Spring\nY) Summer\nZ) Fall",
       "answer": "X) SPRING"
     },
     {
@@ -133,9 +133,9 @@
       "round": 5,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice If Earth abruptly stopped rotating, which of the\nfollowing best describes how global atmospheric circulation patterns would most likely change?\nW) Intensified three-cell circulation due to stronger pressure gradients\nX) Weakened three-cell circulation due to weaker pressure gradients\nY) Single cell per hemisphere with rising air at the equator and sinking at the poles\nZ) Single cell per hemisphere with rising air at the poles and sinking at the equator",
+      "question": "If Earth abruptly stopped rotating, which of the\nfollowing best describes how global atmospheric circulation patterns would most likely change?\nW) Intensified three-cell circulation due to stronger pressure gradients\nX) Weakened three-cell circulation due to weaker pressure gradients\nY) Single cell per hemisphere with rising air at the equator and sinking at the poles\nZ) Single cell per hemisphere with rising air at the poles and sinking at the equator",
       "answer": "Y) SINGLE CELL PER HEMISPHERE WITH RISING AIR AT THE EQUATOR AND SINKING AT THE POLES"
     },
     {
@@ -210,9 +210,9 @@
       "round": 5,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice In which of the following rock types are subter-\nranean rivers most commonly embedded?\nW) Limestone\nX) Sandstone\nY) Granite\nZ) Shale",
+      "question": "In which of the following rock types are subter-\nranean rivers most commonly embedded?\nW) Limestone\nX) Sandstone\nY) Granite\nZ) Shale",
       "answer": "W) LIMESTONE"
     },
     {
@@ -221,9 +221,9 @@
       "round": 5,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three gems by increasing hard-\nness on the Mohs hardness scale: 1) Topaz; 2) Diamond; 3) Pearls.",
+      "question": "Order the following three gems by increasing hard-\nness on the Mohs hardness scale: 1) Topaz; 2) Diamond; 3) Pearls.",
       "answer": "3, 1, 2"
     },
     {
@@ -364,9 +364,9 @@
       "round": 5,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice Relative to a cluster’s main sequence turnoff\npoint, where on an H-R diagram are blue stragglers found?\nW) Up and to the left\nX) Up and to the right\nY) Down and to the left\nZ) Down and to the right",
+      "question": "Relative to a cluster’s main sequence turnoff\npoint, where on an H-R diagram are blue stragglers found?\nW) Up and to the left\nX) Up and to the right\nY) Down and to the left\nZ) Down and to the right",
       "answer": "W) UP AND TO THE LEFT"
     },
     {
@@ -375,9 +375,9 @@
       "round": 5,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Energy",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three energy densities by the\ntime at which they began to dominate the universe’s expansion history, from earliest to latest: 1)\nDark energy; 2) Matter; 3) Radiation.",
+      "question": "Order the following three energy densities by the\ntime at which they began to dominate the universe’s expansion history, from earliest to latest: 1)\nDark energy; 2) Matter; 3) Radiation.",
       "answer": "3, 2, 1"
     },
     {
@@ -518,9 +518,9 @@
       "round": 5,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three anomalies that\nwere caused by giant impacts: 1) Mars’ crust is thinner in the northern than southern hemisphere;\n2) Mercury has a disproportionately large iron core; 3) Uranus has a high obliquity to the ecliptic.",
+      "question": "Identify all of the following three anomalies that\nwere caused by giant impacts: 1) Mars’ crust is thinner in the northern than southern hemisphere;\n2) Mercury has a disproportionately large iron core; 3) Uranus has a high obliquity to the ecliptic.",
       "answer": "ALL"
     },
     {
@@ -529,9 +529,9 @@
       "round": 5,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three regions in order of in-\ncreasing aggregate mass: 1) The asteroid belt; 2) The Kuiper belt; 3) The Oort cloud.",
+      "question": "Order the following three regions in order of in-\ncreasing aggregate mass: 1) The asteroid belt; 2) The Kuiper belt; 3) The Oort cloud.",
       "answer": "1, 2, 3"
     },
     {

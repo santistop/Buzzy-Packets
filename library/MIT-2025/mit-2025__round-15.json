@@ -3,7 +3,7 @@
     "competition": "MIT 2025",
     "round": "Round 15",
     "source": "Round 15.pdf",
-    "exportedAt": "2026-09-08T17:55:31.709Z"
+    "exportedAt": "2026-09-08T20:52:56.808Z"
   },
   "questions": [
     {
@@ -14,7 +14,7 @@
       "kindWarn": false,
       "category": "Mathematics",
       "type": "Short Answer",
-      "question": "\u0000ROUND:15\u0000\nRound 15\nTOSS-UP\n1) MATH – Short Answer Tim picks a random 3-digit number and squares it. What is the\nprobability that its unit digit is a composite number?",
+      "question": "Tim picks a random 3-digit number and squares it. What is the\nprobability that its unit digit is a composite number?",
       "answer": "3/5 VISUAL BONUS"
     },
     {
@@ -100,9 +100,9 @@
       "round": 15,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer What structural feature is created by the rotational\nextension of crustal blocks in a back-arc extensional setting, typically seen as low-angle normal\nfaults?",
+      "question": "What structural feature is created by the rotational\nextension of crustal blocks in a back-arc extensional setting, typically seen as low-angle normal\nfaults?",
       "answer": "DETACHMENT FAULT VISUAL BONUS"
     },
     {
@@ -111,9 +111,9 @@
       "round": 15,
       "kind": "BONUS",
       "kindWarn": true,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Your next bonus is visual. Answer the following two\nquestions regarding the mineral shown in the photo. 1) What non-fluorescent silicate mineral is\nthis specimen? 2) What crystal system does this mineral belong to?",
+      "question": "Your next bonus is visual. Answer the following two\nquestions regarding the mineral shown in the photo. 1) What non-fluorescent silicate mineral is\nthis specimen? 2) What crystal system does this mineral belong to?",
       "answer": "1) BERYL; 2) HEXAGONAL (ACCEPT: 1) RED BERYL, BIXBITE, DO NOT AC- CEPT: 1) AQUAMARINE, MORGANITE, HELIODOR, MAXIXIE, EMERALD)"
     },
     {
@@ -254,9 +254,9 @@
       "round": 15,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Multiple Choice",
-      "question": "EARTH AND SPACE – Multiple Choice The first stage of mid-latitude cyclone formation\ninvolves a low-pressure center emerging along what type of front?\nW) Warm\nX) Cold\nY) Stationary\nZ) Occluded",
+      "question": "The first stage of mid-latitude cyclone formation\ninvolves a low-pressure center emerging along what type of front?\nW) Warm\nX) Cold\nY) Stationary\nZ) Occluded",
       "answer": "Y) STATIONARY"
     },
     {
@@ -265,9 +265,9 @@
       "round": 15,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Identify all of the following three statements that\nare true of plastic flow in glaciers: 1) Plastic flow dominates cold-based glaciers; 2) Plastic flow\noperates effectively throughout the entire glacier; 3) Plastic flow requires glacial ice to be at or\nabove the pressure melting point.",
+      "question": "Identify all of the following three statements that\nare true of plastic flow in glaciers: 1) Plastic flow dominates cold-based glaciers; 2) Plastic flow\noperates effectively throughout the entire glacier; 3) Plastic flow requires glacial ice to be at or\nabove the pressure melting point.",
       "answer": "1 ONLY"
     },
     {
@@ -320,9 +320,9 @@
       "round": 15,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following four elements by increasing\nmass fraction of the observable universe: 1) Oxygen; 2) Carbon; 3) Lithium; 4) Iron.",
+      "question": "Order the following four elements by increasing\nmass fraction of the observable universe: 1) Oxygen; 2) Carbon; 3) Lithium; 4) Iron.",
       "answer": "3, 4, 2, 1"
     },
     {
@@ -331,9 +331,9 @@
       "round": 15,
       "kind": "BONUS",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three fundamental forces in\nchronological order of when they first became independent forces in the inflationary universe\nhypothesis: 1) Weak force; 2) Strong force; 3) Gravitational Force",
+      "question": "Order the following three fundamental forces in\nchronological order of when they first became independent forces in the inflationary universe\nhypothesis: 1) Weak force; 2) Strong force; 3) Gravitational Force",
       "answer": "3, 2, 1"
     },
     {
@@ -452,9 +452,9 @@
       "round": 15,
       "kind": "TOSS-UP",
       "kindWarn": false,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Order the following three celestial objects from least\nto greatest albedo: 1) Venus; 2) Jupiter; 3) Ceres.",
+      "question": "Order the following three celestial objects from least\nto greatest albedo: 1) Venus; 2) Jupiter; 3) Ceres.",
       "answer": "3, 2, 1 VISUAL BONUS"
     },
     {
@@ -463,9 +463,9 @@
       "round": 15,
       "kind": "BONUS",
       "kindWarn": true,
-      "category": "Uncategorized",
+      "category": "Earth and Space",
       "type": "Short Answer",
-      "question": "EARTH AND SPACE – Short Answer Your next bonus is visual. Answer the following\ntwo questions about the Earth-orbiting satellite whose ground track is shown in the image. 1) To\nthe nearest hour, what is its period? 2) To the nearest 10 degrees, above what latitude does it reach\napogee? Specify north or south.",
+      "question": "Your next bonus is visual. Answer the following\ntwo questions about the Earth-orbiting satellite whose ground track is shown in the image. 1) To\nthe nearest hour, what is its period? 2) To the nearest 10 degrees, above what latitude does it reach\napogee? Specify north or south.",
       "answer": "1) 12; 2) 60, NORTH (ACCEPT: 2) 60°N)"
     },
     {
