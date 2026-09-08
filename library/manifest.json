@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-09-08T17:23:06.784Z",
+  "competitions": [
+    {
+      "name": "MIT 2025",
+      "sets": [
+        {
+          "label": "Round 1",
+          "file": "MIT-2025/mit-2025__round-1.json"
+        }
+      ]
+    }
+  ]
+}

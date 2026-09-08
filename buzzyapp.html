@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sci Bowl Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<style>
+  :root{
+    --bg: #14171A;
+    --panel: #1D2126;
+    --panel-raised: #262B32;
+    --hairline: #33393F;
+    --text: #EDEFF1;
+    --text-muted: #8B939B;
+    --accent: #7FD858;
+    --accent-dim: #4C7E38;
+    --team-a: #4FA8D8;
+    --team-a-dim: #2C4C60;
+    --team-b: #E2622E;
+    --team-b-dim: #5C3320;
+    --good: #59C97A;
+    --bad: #E2483D;
+    --warn: #F2A93B;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'Public Sans', system-ui, sans-serif;
+    --radius: 6px;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    display:flex; flex-direction:column; min-height:100vh;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+
+  .screen{ display:none; flex:1; flex-direction:column; }
+  .screen.active{ display:flex; }
+
+  /* ---------- shared bits ---------- */
+  button{
+    font-family:var(--sans); font-weight:600; font-size:.95rem; color:var(--text);
+    background:var(--panel-raised); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:.65rem 1.1rem; cursor:pointer; transition:background .12s, border-color .12s, transform .05s;
+  }
+  button:hover{ background:#2E343B; border-color:#454C54; }
+  button:active{ transform:translateY(1px); }
+  button:disabled{ opacity:.35; cursor:not-allowed; }
+  button.primary{ background:var(--accent); border-color:var(--accent); color:#0C1300; }
+  button.primary:hover{ background:#93E36E; }
+  input[type=text], input[type=number], select{
+    font-family:var(--sans); font-size:.95rem; color:var(--text); background:var(--panel);
+    border:1px solid var(--hairline); border-radius:var(--radius); padding:.55rem .7rem; width:100%;
+  }
+  label{ font-size:.78rem; color:var(--text-muted); display:block; margin-bottom:.3rem; letter-spacing:.01em; }
+  .field{ margin-bottom:.9rem; }
+  .row{ display:flex; gap:1rem; }
+  .row > *{ flex:1; }
+  .hint{ font-size:.82rem; color:var(--text-muted); line-height:1.5; }
+  .card{ background:var(--panel); border:1px solid var(--hairline); border-radius:8px; padding:1.4rem; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb{ background:var(--hairline); border-radius:5px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+
+  /* ---------- setup screen ---------- */
+  #screen-setup{ align-items:center; justify-content:center; padding:2rem 1rem; }
+  .setup-wrap{ width:100%; max-width:640px; }
+  .brand{ display:flex; align-items:baseline; gap:.6rem; margin-bottom:.35rem; }
+  .brand .mark{ width:11px; height:11px; border-radius:2px; background:var(--accent); }
+  .brand h1{ font-size:1.05rem; letter-spacing:.03em; margin:0; font-weight:700; }
+  .setup-wrap > p.hint{ margin:0 0 1.6rem; }
+  .dropzone{
+    border:1.5px dashed var(--hairline); border-radius:10px; padding:2.4rem 1.4rem; text-align:center;
+    cursor:pointer; transition:border-color .15s, background .15s;
+  }
+  .dropzone.drag{ border-color:var(--accent); background:rgba(127,216,88,.06); }
+  .dropzone .big{ font-size:1.05rem; font-weight:600; margin-bottom:.3rem; }
+  .dropzone .file-chip{
+    display:inline-flex; align-items:center; gap:.5rem; margin-top:.9rem; padding:.4rem .8rem;
+    background:var(--panel-raised); border-radius:20px; font-size:.85rem; font-family:var(--mono);
+  }
+  .settings-card{ margin-top:1.4rem; }
+  .settings-card h2{ font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text-muted); margin:0 0 1rem; font-weight:600; }
+  .team-color-a{ color:var(--team-a); } .team-color-b{ color:var(--team-b); }
+  #parseStatus{ margin-top:1rem; font-size:.86rem; }
+  #parseStatus.err{ color:var(--bad); }
+  #parseStatus.ok{ color:var(--good); }
+  .hint.err{ color:var(--bad); }
+  .setup-actions{ display:flex; justify-content:flex-end; margin-top:1.4rem; gap:.7rem; }
+
+  /* ---------- review screen ---------- */
+  #screen-review{ padding:1.4rem; gap:1rem; }
+  .review-top{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .review-top h1{ font-size:1rem; margin:0; }
+  .review-top .stats{ font-family:var(--mono); font-size:.82rem; color:var(--text-muted); }
+  .filters{ display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; }
+  .chip{
+    font-size:.8rem; padding:.35rem .7rem; border-radius:20px; border:1px solid var(--hairline);
+    background:var(--panel); cursor:pointer; color:var(--text-muted); user-select:none;
+  }
+  .chip.on{ background:var(--panel-raised); color:var(--text); border-color:#454C54; }
+  .review-body{ display:flex; gap:1rem; flex:1; min-height:0; }
+  .q-list{ width:340px; flex-shrink:0; overflow-y:auto; border:1px solid var(--hairline); border-radius:8px; background:var(--panel); }
+  .q-item{ padding:.7rem .9rem; border-bottom:1px solid var(--hairline); cursor:pointer; font-size:.85rem; }
+  .q-item:hover{ background:var(--panel-raised); }
+  .q-item.sel{ background:var(--panel-raised); border-left:3px solid var(--accent); }
+  .q-item .meta{ display:flex; gap:.5rem; align-items:center; margin-bottom:.25rem; }
+  .badge{ font-family:var(--mono); font-size:.68rem; padding:.1rem .4rem; border-radius:3px; letter-spacing:.03em; }
+  .badge.toss{ background:var(--team-a-dim); color:var(--team-a); }
+  .badge.bonus{ background:#4a3a1f; color:var(--warn); }
+  .badge.warn{ background:#4a2a2a; color:var(--bad); }
+  .q-item .snippet{ color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .q-detail{ flex:1; overflow-y:auto; border:1px solid var(--hairline); border-radius:8px; background:var(--panel); padding:1.2rem; }
+  .q-detail textarea{
+    width:100%; font-family:var(--sans); font-size:.92rem; color:var(--text); background:var(--panel-raised);
+    border:1px solid var(--hairline); border-radius:var(--radius); padding:.7rem; resize:vertical; line-height:1.5;
+  }
+  .review-actions{ display:flex; justify-content:space-between; align-items:center; }
+
+  /* ---------- match screen ---------- */
+  #screen-match{ padding:0; }
+  .scoreboard{ display:flex; align-items:stretch; border-bottom:1px solid var(--hairline); }
+  .team-panel{ flex:1; padding:1rem 1.4rem; display:flex; flex-direction:column; justify-content:center; gap:.15rem; transition:background .15s; }
+  .team-panel.a{ border-right:1px solid var(--hairline); border-left:4px solid var(--team-a); }
+  .team-panel.b{ border-left:4px solid var(--team-b); text-align:right; }
+  .team-panel .tname{ font-size:.82rem; color:var(--text-muted); font-weight:600; letter-spacing:.02em; }
+  .team-panel .tscore{ font-family:var(--mono); font-size:2.4rem; font-weight:600; line-height:1.1; }
+  .team-panel.a .tname, .team-panel.a .tscore{ color:var(--team-a); }
+  .team-panel.b .tname, .team-panel.b .tscore{ color:var(--team-b); }
+  .team-panel.buzzed-a{ background:rgba(79,168,216,.14); }
+  .team-panel.buzzed-b{ background:rgba(226,98,46,.14); }
+  .center-panel{ flex:0 0 220px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:.6rem; gap:.35rem; }
+  .prog{ font-family:var(--mono); font-size:.72rem; color:var(--text-muted); }
+  .timer-num{ font-family:var(--mono); font-size:2.1rem; font-weight:600; color:var(--text); }
+  .timer-num.low{ color:var(--bad); }
+  .timer-bar{ width:100%; height:5px; background:var(--panel-raised); border-radius:3px; overflow:hidden; }
+  .timer-fill{ height:100%; background:var(--accent); width:100%; transition:width .12s linear, background .2s; }
+  .timer-fill.low{ background:var(--bad); }
+
+  .stage{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2.5rem 2rem; text-align:center; gap:1.2rem; }
+  .stage-meta{ display:flex; gap:.6rem; align-items:center; }
+  .eyebrow{ font-family:var(--mono); font-size:.78rem; letter-spacing:.04em; color:var(--text-muted); }
+  .kind-tag{ font-family:var(--mono); font-size:.72rem; padding:.15rem .55rem; border-radius:3px; }
+  .kind-tag.toss{ background:var(--team-a-dim); color:var(--team-a); }
+  .kind-tag.bonus{ background:#4a3a1f; color:var(--warn); }
+  .qtext{ font-size:1.55rem; line-height:1.5; max-width:900px; white-space:pre-wrap; font-weight:500; }
+  .qtext .opt-line{ display:block; }
+  .qtext .word, .answer-reveal .word{ transition:background .1s, color .1s; border-radius:3px; }
+  .qtext .word.active{ background:var(--accent); color:#0C1300; padding:0 .12rem; margin:0 -.12rem; }
+  .answer-reveal .word.active{ background:var(--good); color:#062B10; padding:0 .12rem; margin:0 -.12rem; }
+  .qtext .word.pending, .answer-reveal .word.pending{ visibility:hidden; }
+  .answer-label{ font-weight:700; opacity:.9; }
+  .answer-reveal{
+    font-size:1.15rem; color:var(--good); background:rgba(89,201,122,.08); border:1px solid rgba(89,201,122,.3);
+    border-radius:8px; padding:.9rem 1.4rem; max-width:900px; white-space:pre-wrap;
+  }
+  .buzz-flag{ font-family:var(--mono); font-size:1rem; letter-spacing:.03em; padding:.4rem 1rem; border-radius:20px; }
+  .buzz-flag.a{ background:var(--team-a-dim); color:var(--team-a); }
+  .buzz-flag.b{ background:var(--team-b-dim); color:var(--team-b); }
+
+  /* ---------- modal ---------- */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:100;
+    align-items:center; justify-content:center; padding:1rem;
+  }
+  .modal-overlay.active{ display:flex; }
+  .modal-card{ width:100%; max-width:440px; }
+  .modal-card h2{ font-size:.95rem; margin:0 0 1rem; font-weight:700; }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:.7rem; margin-top:1.2rem; }
+
+  .controls{ border-top:1px solid var(--hairline); padding:1rem 1.4rem; display:flex; gap:.6rem; align-items:center; justify-content:center; flex-wrap:wrap; }
+  .buzz-btn{ font-family:var(--mono); font-weight:700; letter-spacing:.03em; padding:.8rem 1.5rem; }
+  .buzz-btn.a{ background:var(--team-a-dim); border-color:var(--team-a); color:var(--team-a); }
+  .buzz-btn.a:hover{ background:#2C4C60; }
+  .buzz-btn.b{ background:var(--team-b-dim); border-color:var(--team-b); color:var(--team-b); }
+  .buzz-btn.b:hover{ background:#5C3320; }
+  button.good{ background:var(--good); border-color:var(--good); color:#062B10; }
+  button.bad{ background:var(--bad); border-color:var(--bad); color:#2B0605; }
+  .controls-hint{ width:100%; text-align:center; font-size:.75rem; color:var(--text-muted); font-family:var(--mono); }
+
+  .flag-btn{
+    font-size:.78rem; padding:.3rem .7rem; border-radius:20px; border:1px solid var(--hairline);
+    background:var(--panel); color:var(--text-muted); font-weight:600;
+  }
+  .flag-btn:hover{ background:var(--panel-raised); }
+  .flag-btn.on{ background:#4a3a1f; border-color:var(--warn); color:var(--warn); }
+
+  /* ---------- end screen ---------- */
+  #screen-end{ align-items:center; justify-content:center; text-align:center; gap:1.2rem; padding:2rem; }
+  #screen-end .final-scores{ display:flex; gap:2.5rem; }
+  #screen-end .fs{ font-family:var(--mono); }
+  #screen-end .fs .n{ font-size:3rem; font-weight:700; }
+  #screen-end .fs.a .n{ color:var(--team-a); } #screen-end .fs.b .n{ color:var(--team-b); }
+  #screen-end .fs .l{ color:var(--text-muted); font-size:.85rem; }
+  .stats-card{ width:100%; max-width:520px; text-align:left; }
+  .stats-card h2{ font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text-muted); margin:0 0 1rem; font-weight:600; }
+  .stat-row{ margin-bottom:.8rem; }
+  .stat-row-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:.88rem; margin-bottom:.3rem; }
+  .stat-cat{ color:var(--text); font-weight:600; }
+  .stat-frac{ color:var(--text-muted); font-family:var(--mono); font-size:.82rem; }
+  .stat-bar{ height:6px; background:var(--panel-raised); border-radius:3px; overflow:hidden; }
+  .stat-bar-fill{ height:100%; background:var(--accent); }
+  #overallAccuracy{ font-size:.98rem; color:var(--text); padding-top:.8rem; margin-top:.4rem; border-top:1px solid var(--hairline); font-family:var(--mono); }
+
+  .flagged-card{ width:100%; max-width:520px; text-align:left; max-height:340px; overflow-y:auto; }
+  .flagged-card h2{ font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--warn); margin:0 0 1rem; font-weight:600; }
+  .flagged-item{ border:1px solid var(--hairline); border-radius:8px; padding:.8rem .9rem; margin-bottom:.7rem; background:var(--panel-raised); }
+  .flagged-item-top{ display:flex; gap:.5rem; align-items:center; margin-bottom:.4rem; }
+  .flagged-q{ font-size:.88rem; line-height:1.5; white-space:pre-wrap; margin-bottom:.5rem; }
+  .flagged-a{ font-size:.84rem; color:var(--good); line-height:1.5; white-space:pre-wrap; }
+
+  body.solo-mode .team-panel.b{ display:none; }
+  body.solo-mode .buzz-btn.b{ display:none; }
+  #screen-end.solo-mode-end .fs.b, body.solo-mode .fs.b{ display:none; }
+
+  @media (max-width:760px){
+    .review-body{ flex-direction:column; }
+    .q-list{ width:100%; max-height:200px; }
+    .scoreboard{ flex-wrap:wrap; }
+    .center-panel{ order:-1; flex-basis:100%; }
+    .qtext{ font-size:1.2rem; }
+  }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<!-- ============ SETUP SCREEN ============ -->
+<div class="screen active" id="screen-setup">
+  <div class="setup-wrap">
+    <div class="brand"><div class="mark"></div><h1>SCI BOWL READER</h1></div>
+    <p class="hint">Upload a Science Bowl question set PDF. It'll be parsed into toss-ups and bonuses, then you can run a full moderated match with reading, buzzers, and a scoreboard.</p>
+
+    <div class="dropzone" id="dropzone">
+      <div class="big">Drop a question set PDF here</div>
+      <div class="hint">or click to browse</div>
+      <input type="file" id="fileInput" accept="application/pdf" style="display:none">
+      <div id="fileChip"></div>
+    </div>
+    <div id="parseStatus"></div>
+
+    <div class="card settings-card">
+      <h2>Mode</h2>
+      <div class="field">
+        <label>Match mode</label>
+        <select id="modeSelect">
+          <option value="duo">Head-to-head — 2 teams</option>
+          <option value="solo">Solo practice — 1 buzzer</option>
+        </select>
+      </div>
+      <h2>Teams</h2>
+      <div class="row">
+        <div class="field"><label class="team-color-a" id="teamALabel">Team A name</label><input type="text" id="teamAName" value="Team A"></div>
+        <div class="field" id="teamBField"><label class="team-color-b">Team B name</label><input type="text" id="teamBName" value="Team B"></div>
+      </div>
+      <h2>Timing &amp; scoring</h2>
+      <div class="row">
+        <div class="field"><label>Toss-up time (sec)</label><input type="number" id="tossSeconds" value="5" min="1" max="60"></div>
+        <div class="field"><label>Bonus time (sec)</label><input type="number" id="bonusSeconds" value="20" min="1" max="120"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Toss-up points</label><input type="number" id="tossPoints" value="4" min="1" max="100"></div>
+        <div class="field"><label>Bonus points (per part)</label><input type="number" id="bonusPoints" value="10" min="1" max="100"></div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;">
+          <input type="checkbox" id="alwaysBonus" style="width:auto;"> <span style="color:var(--text);font-size:.9rem;">Always read the bonus, even if the toss-up is missed or unanswered</span>
+        </label>
+      </div>
+      <h2 style="margin-top:1.4rem;">Reading voice</h2>
+      <div class="row">
+        <div class="field"><label>Voice</label><select id="voiceSelect"><option>Loading voices…</option></select></div>
+        <div class="field"><label>Rate</label><input type="number" id="rateInput" value="1" min="0.5" max="1.5" step="0.05"></div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;">
+          <input type="checkbox" id="autoRead" checked style="width:auto;"> <span style="color:var(--text);font-size:.9rem;">Auto-read each question aloud when it loads</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="setup-actions">
+      <button class="primary" id="toReviewBtn" disabled>Parse &amp; Review Questions →</button>
+    </div>
+
+    <div class="card settings-card" id="libraryCard">
+      <h2>Preloaded library</h2>
+      <p class="hint" style="margin:0 0 .9rem;">Load a question set from a shared library (e.g. hosted on GitHub) instead of uploading a PDF.</p>
+      <div class="field">
+        <label>Library manifest URL</label>
+        <input type="text" id="manifestUrl" placeholder="https://raw.githubusercontent.com/you/repo/main/library/manifest.json">
+      </div>
+      <div class="setup-actions" style="margin-top:0;">
+        <button id="browseLibraryBtn">Browse Library →</button>
+      </div>
+      <div id="libraryStatus" class="hint" style="margin-top:.8rem;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LIBRARY SCREEN ============ -->
+<div class="screen" id="screen-library">
+  <div class="review-top">
+    <h1>Question set library</h1>
+    <div class="stats" id="libraryMeta"></div>
+  </div>
+  <div class="review-body">
+    <div class="q-list" id="libraryList" style="width:100%;"></div>
+  </div>
+  <div class="review-actions">
+    <button id="backToSetupFromLibrary">← Back</button>
+    <div class="hint" id="libraryLoadStatus"></div>
+    <div></div>
+  </div>
+</div>
+
+<!-- ============ REVIEW SCREEN ============ -->
+<div class="screen" id="screen-review">
+  <div class="review-top">
+    <h1>Review parsed questions</h1>
+    <div class="stats" id="reviewStats"></div>
+  </div>
+  <div class="filters" id="filters"></div>
+  <div class="review-body">
+    <div class="q-list" id="qList"></div>
+    <div class="q-detail" id="qDetail"></div>
+  </div>
+  <div class="review-actions">
+    <button id="backToSetup">← Back</button>
+    <div class="hint" id="setCount"></div>
+    <div style="display:flex;gap:.6rem;">
+      <button id="exportJsonBtn">Export as JSON…</button>
+      <button class="primary" id="startMatchBtn">Start Match →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MATCH SCREEN ============ -->
+<div class="screen" id="screen-match">
+  <div class="scoreboard">
+    <div class="team-panel a" id="panelA">
+      <div class="tname" id="nameA">Team A</div>
+      <div class="tscore" id="scoreA">0</div>
+    </div>
+    <div class="center-panel">
+      <div class="prog" id="progLabel">Set 1 / 1</div>
+      <div class="timer-num" id="timerNum">–</div>
+      <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+    </div>
+    <div class="team-panel b" id="panelB">
+      <div class="tname" id="nameB">Team B</div>
+      <div class="tscore" id="scoreB">0</div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-meta">
+      <span class="kind-tag" id="kindTag"></span>
+      <span class="eyebrow" id="catTag"></span>
+      <button class="flag-btn" id="flagBtn" title="Flag this question to review after the match (F)">🚩 Flag</button>
+    </div>
+    <div class="qtext" id="qtext">—</div>
+    <div class="buzz-flag" id="buzzFlag" style="display:none;"></div>
+    <div class="answer-reveal" id="answerBox" style="display:none;"></div>
+  </div>
+
+  <div class="controls" id="controls"></div>
+</div>
+
+<!-- ============ END SCREEN ============ -->
+<div class="screen" id="screen-end">
+  <div class="brand"><div class="mark"></div><h1>MATCH COMPLETE</h1></div>
+  <div class="final-scores">
+    <div class="fs a"><div class="n" id="finalA">0</div><div class="l" id="finalNameA">Team A</div></div>
+    <div class="fs b"><div class="n" id="finalB">0</div><div class="l" id="finalNameB">Team B</div></div>
+  </div>
+  <div class="card stats-card">
+    <h2>Performance by topic</h2>
+    <div id="statsBody"></div>
+    <div id="overallAccuracy"></div>
+  </div>
+  <div class="card flagged-card" id="flaggedSection" style="display:none;">
+    <h2>🚩 Flagged questions</h2>
+    <div id="flaggedList"></div>
+  </div>
+  <button class="primary" id="restartBtn">Start a new match</button>
+</div>
+
+<!-- ============ EXPORT AS JSON MODAL ============ -->
+<div class="modal-overlay" id="exportModalOverlay">
+  <div class="card modal-card">
+    <h2>Export as JSON</h2>
+    <div class="field">
+      <label>Competition name</label>
+      <input type="text" id="exportCompetition" placeholder='e.g. "Johns Hopkins Invitational 2025"'>
+    </div>
+    <div class="field">
+      <label>Round / set label</label>
+      <input type="text" id="exportRound" placeholder='e.g. "Round 3" or "Bonus Set A"'>
+    </div>
+    <div class="modal-actions">
+      <button id="exportModalCancel">Cancel</button>
+      <button class="primary" id="exportModalConfirm">Download JSON</button>
+    </div>
+  </div>
+</div>
+
+<script>
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+}
+
+/* ============================================================
+   STATE
+============================================================ */
+const S = {
+  rawText: '',
+  parsed: [],          // flat list of {n, kind, category, type, question, answer, warn}
+  sets: [],            // grouped [{tossup, bonuses:[...]}]
+  filtered: [],
+  selectedQIdx: 0,
+  setMeta: null,        // {competition, round, source} — for the current loaded set, used by Export
+  activeFilters: { categories: new Set(), types: new Set(), kinds: new Set(['TOSS-UP','BONUS']) },
+  config: { teamAName:'Team A', teamBName:'Team B', tossSeconds:5, bonusSeconds:20, tossPoints:4, bonusPoints:10, autoRead:true, alwaysBonus:false, voiceURI:null, rate:1 },
+  match: null,
+  voices: []
+};
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* ============================================================
+   PDF TEXT EXTRACTION
+============================================================ */
+async function extractPdfText(file){
+  const buf = await file.arrayBuffer();
+  const doc = await pdfjsLib.getDocument({data: buf}).promise;
+  const pagesLines = [];
+  for (let p = 1; p <= doc.numPages; p++){
+    const page = await doc.getPage(p);
+    const content = await page.getTextContent();
+    // Group items into lines by y coordinate, using a tolerance based on font
+    // size rather than exact-rounded equality. Superscript/subscript glyphs
+    // (exponents, chemical subscripts) are rendered at a shifted baseline —
+    // exact rounding puts them in a different "line" bucket entirely, which
+    // scrambles them out of the word they belong to. A size-relative tolerance
+    // keeps them clustered with the main text line they visually sit on.
+    const clusters = [];
+    content.items.forEach(item=>{
+      const y = item.transform[5];
+      // Approximate font size from the glyph transform so both the line
+      // tolerance and the intra-line spacing scale with the actual text size.
+      const fontSize = Math.hypot(item.transform[0], item.transform[1]) || Math.abs(item.transform[3]) || 1;
+      let cluster = clusters.find(c => Math.abs(c.anchorY - y) <= Math.max(c.anchorSize, fontSize) * 0.55);
+      if (!cluster){
+        cluster = { anchorY: y, anchorSize: fontSize, items: [] };
+        clusters.push(cluster);
+      } else if (fontSize > cluster.anchorSize){
+        // Re-anchor to the largest glyph seen on the line (the body text,
+        // not a sub/superscript) so later same-line comparisons stay accurate.
+        cluster.anchorY = y;
+        cluster.anchorSize = fontSize;
+      }
+      cluster.items.push({ x: item.transform[4], str: item.str, width: item.width || 0, fontSize });
+    });
+    const pageLines = clusters
+      .sort((a,b)=> b.anchorY - a.anchorY)
+      .map(cluster=>{
+        const sorted = cluster.items.slice().sort((a,b)=>a.x-b.x);
+        let line = '';
+        let prevEnd = null;
+        sorted.forEach(it=>{
+          if (prevEnd !== null){
+            const gap = it.x - prevEnd;
+            // Only insert a space when there's a real visible gap; adjacent
+            // glyphs (like a subscript digit hugging the letter before it)
+            // should concatenate directly instead of getting split apart.
+            if (gap > it.fontSize * 0.22) line += ' ';
+          }
+          line += it.str;
+          prevEnd = it.x + (it.width || it.str.length * it.fontSize * 0.5);
+        });
+        return line;
+      });
+    pagesLines.push(pageLines);
+  }
+
+  // Work out which round each page belongs to BEFORE stripping footers,
+  // since the round number often only appears inside the very footer line
+  // (e.g. "... Round 1 page 4") that we're about to remove.
+  let lastRound = 1;
+  const pageRounds = pagesLines.map(lines=>{
+    for (const line of lines){
+      const m = line.match(/ROUND\s+(\d{1,2})\b/i);
+      if (m){ lastRound = parseInt(m[1], 10); break; }
+    }
+    return lastRound;
+  });
+
+  const cleaned = stripBoilerplateLines(pagesLines);
+
+  // Re-insert the round number as a marker that survived stripping, so
+  // parseQuestions can still tell rounds apart even though the visible
+  // "ROUND n" text may have been removed as a footer.
+  let fullText = '';
+  let prevRound = null;
+  cleaned.forEach((lines, i)=>{
+    if (pageRounds[i] !== prevRound){
+      fullText += `\n\u0000ROUND:${pageRounds[i]}\u0000\n`;
+      prevRound = pageRounds[i];
+    }
+    fullText += lines.join('\n') + '\n\n';
+  });
+  return fullText;
+}
+
+// Removes repeated page headers/footers (tournament name, round/page labels,
+// page numbers, etc.) that would otherwise get swept into a question's answer
+// text when they sit between the real answer and the next question.
+function stripBoilerplateLines(pagesLines){
+  const numPages = pagesLines.length;
+  const normalize = (line) => line.trim().replace(/\d+/g, '#').replace(/\s+/g, ' ').toLowerCase();
+  const freq = new Map();
+
+  pagesLines.forEach(lines=>{
+    const seenThisPage = new Set();
+    lines.forEach(line=>{
+      const norm = normalize(line);
+      if (!norm || seenThisPage.has(norm)) return;
+      seenThisPage.add(norm);
+      freq.set(norm, (freq.get(norm) || 0) + 1);
+    });
+  });
+
+  // A line that (a) recurs on most pages with only its numbers changing, or
+  // (b) matches common footer wording, is treated as page furniture rather
+  // than question content.
+  const threshold = Math.max(2, Math.ceil(numPages * 0.5));
+  const footerKeywordRe = /\bpage\s*\d+\b|\b\d+\s*\/\s*\d+\b|\binvitational\b|\bregional\s+tournament\b|\bnational\s+science\s+bowl\b/i;
+  // A real answer-reveal line ("ANSWER: 63") must never be treated as
+  // boilerplate. The digit-normalization above collapses any purely numeric
+  // answer down to the same shape ("answer: #"), so on a set full of math
+  // questions (63, 2500, 0, 4, 3, ...) that exact shape legitimately recurs
+  // across most pages — tripping the repeated-footer heuristic and silently
+  // deleting the answer line itself. When that happens the parser can't find
+  // that question's own ANSWER: marker and keeps consuming text into the
+  // next question(s). Answer lines are content, not furniture, regardless of
+  // how often their shape repeats, so they're exempted outright.
+  const answerLineRe = /^\s*ANSWER\s*:/i;
+
+  return pagesLines.map(lines => lines.filter(line=>{
+    if (answerLineRe.test(line)) return true;
+    const norm = normalize(line);
+    const isRepeatedFooter = numPages > 1 && /\d/.test(line) && freq.get(norm) >= threshold;
+    const isKeywordFooter = footerKeywordRe.test(line) && line.trim().split(/\s+/).length <= 14;
+    return !(isRepeatedFooter || isKeywordFooter);
+  }));
+}
+
+/* ============================================================
+   QUESTION PARSING
+============================================================ */
+const CATEGORY_LIST = [
+  'Earth and Space Science','Earth Science','Space Science','General Science',
+  'Biology','Chemistry','Physics','Energy','Mathematics','Math','Astronomy'
+];
+const TYPE_LIST = ['Multiple Choice','Short Answer'];
+
+function findHeaderTokens(chunk){
+  const zone = chunk.slice(0, 220);
+  let kind = null, kindWarn = true;
+  // Require the keyword to start a line (or the zone itself) so a stray
+  // in-sentence mention (e.g. an answer note like "no bonus awarded") can't
+  // be mistaken for a real header.
+  let m = zone.match(/(?:^|\n)[ \t]*TOSS[\s-]?UP\b/i);
+  if (m){ kind = 'TOSS-UP'; kindWarn = false; }
+  else { m = zone.match(/(?:^|\n)[ \t]*BONUS\b/i); if (m){ kind = 'BONUS'; kindWarn = false; } }
+
+  let category = null;
+  for (const c of CATEGORY_LIST){
+    const re = new RegExp('\\b' + c.replace(/ /g,'\\s+') + '\\b','i');
+    const cm = zone.match(re);
+    if (cm){ category = (c==='Math') ? 'Mathematics' : c; m = m; if(cm){ break; } }
+  }
+  let type = null;
+  for (const t of TYPE_LIST){
+    if (new RegExp(t,'i').test(zone)){ type = t; break; }
+  }
+  let num = null;
+  const nm = zone.match(/(?:^|\n|\s)(\d{1,3})[\.\)]\s/);
+  if (nm) num = nm[1];
+
+  return { kind, kindWarn, category, type, num };
+}
+
+function stripHeaderFromText(chunk, tokens){
+  let text = chunk;
+  // Strip only recognized header tokens found at the very front of the text,
+  // repeatedly, since they can appear in varying order/combination (number,
+  // TOSS-UP/BONUS tag, category, type). Previously these were stripped via
+  // un-anchored replaces that matched anywhere in the text — which meant a
+  // question that legitimately used a word like "bonus" or a category name
+  // (e.g. "...which is not considered a Chemistry reaction?") could have a
+  // chunk silently deleted out of the middle of its own question text.
+  let changed = true;
+  while (changed){
+    const before = text;
+    text = text.replace(/^\s*\d{1,3}[\.\)]\s*/, '');
+    text = text.replace(/^[\s:.\-–—]*TOSS[\s-]?UP\b[\s:.\-–—]*/i, '');
+    text = text.replace(/^[\s:.\-–—]*BONUS\b[\s:.\-–—]*/i, '');
+    for (const c of CATEGORY_LIST){
+      text = text.replace(new RegExp('^[\\s:.\\-–—]*' + c.replace(/ /g,'\\s+') + '\\b[\\s:.\\-–—]*','i'), '');
+    }
+    for (const t of TYPE_LIST){
+      text = text.replace(new RegExp('^[\\s:.\\-–—]*' + t + '\\b[\\s:.\\-–—]*','i'), '');
+    }
+    changed = (text !== before);
+  }
+  text = text.replace(/^[\s:.\-–—]+/, '').trim();
+  // put multiple-choice options on their own lines for readability
+  text = text.replace(/\s(?=[WXYZ]\)\s)/g, '\n');
+  return text;
+}
+
+function parseQuestions(fullText){
+  const norm = fullText.replace(/\r/g,'').replace(/[ \t]+/g,' ');
+
+  // Detect round markers so question numbers that restart each round
+  // (e.g. Round 1 has a Toss-up #5, Round 2 also has a Toss-up #5) don't collide
+  // when we pair toss-ups with bonuses below. Prefers the synthetic marker
+  // inserted by extractPdfText (which survives footer stripping), but also
+  // matches plain "ROUND n" text as a fallback.
+  const roundMarkers = [];
+  const roundRe = /\u0000ROUND:(\d{1,2})\u0000|\bROUND\s+(\d{1,2})\b/gi;
+  let rm;
+  while ((rm = roundRe.exec(norm))){
+    roundMarkers.push({ pos: rm.index, round: parseInt(rm[1] || rm[2], 10) });
+  }
+  function roundAt(pos){
+    let r = 1;
+    for (const marker of roundMarkers){
+      if (marker.pos <= pos) r = marker.round; else break;
+    }
+    return r;
+  }
+
+  // Matches the actual answer-reveal marker wherever it appears — either on
+  // its own line (the common case) or trailing right after the question text
+  // on the same line, which is how many "Short Answer" questions are laid
+  // out in the source PDF (no multiple-choice options block to force a line
+  // break before ANSWER:). A strict start-of-line anchor was previously used
+  // here to dodge a false match on the word "Answer" inside the "Short
+  // Answer" type label — but that anchor also meant a same-line ANSWER:
+  // never matched at all, so the parser skipped straight past that whole
+  // question to the *next* question's real ANSWER: marker, swallowing the
+  // next question's header and text into the current one. The lookbehind
+  // below excludes the "Short Answer" false positive directly instead, so
+  // the marker can be recognized in either position.
+  const answerRe = /(?<!short )ANSWER\s*:/gi;
+  const matches = [...norm.matchAll(answerRe)];
+  const results = [];
+  let cursor = 0;
+
+  for (let i=0; i<matches.length; i++){
+    const am = matches[i];
+    const headerChunk = norm.slice(cursor, am.index);
+    const tokens = findHeaderTokens(headerChunk);
+    const questionText = stripHeaderFromText(headerChunk, tokens);
+
+    const answerStart = am.index + am[0].length;
+    // answer ends at the next TOSS-UP/BONUS/number-header marker, or next ANSWER, whichever first.
+    // Crucially, that marker must start a *new line* — without the leading \n
+    // requirement, an answer explanation that happens to mention the word
+    // "bonus"/"toss-up" (e.g. "no bonus awarded here") or contains a
+    // sentence like "...roughly 2. Some sources..." would falsely match
+    // mid-sentence, truncating the answer early and dragging the real next
+    // question's header + text into whatever gets parsed next.
+    const nextAm = matches[i+1] ? matches[i+1].index : norm.length;
+    let searchZone = norm.slice(answerStart, nextAm);
+    const nextHeaderMatch = searchZone.search(/\n[ \t]*(?:\d{1,3}[\.\)][ \t]+|TOSS[\s-]?UP\b|BONUS\b)/i);
+    let answerEnd = answerStart + (nextHeaderMatch >= 0 ? nextHeaderMatch : searchZone.length);
+    const answerText = norm.slice(answerStart, answerEnd).replace(/\s+/g,' ').trim();
+
+    if (questionText.length > 3 && answerText.length > 0){
+      // When a header has no detectable question number, fall back to a
+      // placeholder that can never collide with a real extracted number
+      // (real numbers are plain digit strings). Previously this fell back to
+      // a running counter, which could coincidentally equal a *different*
+      // real question's number elsewhere in the packet — silently pairing a
+      // bonus with the wrong toss-up (or vice versa) in buildSets below.
+      const fallbackNum = tokens.num || ('#' + (results.length + 1));
+      results.push({
+        uid: 'q' + results.length,
+        n: fallbackNum,
+        round: roundAt(cursor),
+        kind: tokens.kind,
+        kindWarn: tokens.kindWarn,
+        category: tokens.category || 'Uncategorized',
+        type: tokens.type || '',
+        question: questionText,
+        answer: answerText
+      });
+    }
+    cursor = answerEnd;
+  }
+
+  // fill in missing kinds by alternation heuristic
+  let lastKnown = 'BONUS'; // so first unknown defaults to TOSS-UP
+  results.forEach(q=>{
+    if (!q.kind){ q.kind = (lastKnown === 'TOSS-UP') ? 'BONUS' : 'TOSS-UP'; }
+    lastKnown = q.kind;
+  });
+
+  return results;
+}
+
+// Pairs each toss-up with its bonus/bonuses by matching round + question number,
+// rather than by document order — many official question sets list every toss-up
+// first and every bonus afterward (matched by number), rather than alternating.
+function buildSets(parsed){
+  const groups = new Map();
+  let dupCounter = 0;
+
+  parsed.forEach((q, idx)=>{
+    const key = (q.round != null ? q.round : 'R') + '::' + q.n;
+    let g = groups.get(key);
+
+    if (q.kind === 'TOSS-UP'){
+      if (g && g.tossup){
+        // a second toss-up sharing this round+number: keep it as its own set
+        // rather than silently dropping it.
+        const altKey = key + '::dup' + (dupCounter++);
+        groups.set(altKey, { tossup: q, bonuses: [], order: idx });
+        return;
+      }
+      if (!g){ g = { tossup: null, bonuses: [], order: idx }; groups.set(key, g); }
+      g.tossup = q;
+      g.order = idx;
+    } else {
+      if (!g){ g = { tossup: null, bonuses: [], order: idx }; groups.set(key, g); }
+      g.bonuses.push(q);
+    }
+  });
+
+  return [...groups.values()]
+    .sort((a,b)=>a.order-b.order)
+    .filter(s => s.tossup || s.bonuses.length);
+}
+
+/* ============================================================
+   SETUP SCREEN WIRING
+============================================================ */
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const fileChip = document.getElementById('fileChip');
+const parseStatus = document.getElementById('parseStatus');
+const toReviewBtn = document.getElementById('toReviewBtn');
+
+dropzone.addEventListener('click', ()=> fileInput.click());
+['dragenter','dragover'].forEach(evt=>dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.add('drag'); }));
+['dragleave','drop'].forEach(evt=>dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.remove('drag'); }));
+dropzone.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files[0];
+  if (f) handleFile(f);
+});
+fileInput.addEventListener('change', e=>{
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+
+let currentFile = null;
+async function handleFile(file){
+  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')){
+    parseStatus.className = 'err';
+    parseStatus.textContent = 'Please choose a PDF file.';
+    return;
+  }
+  currentFile = file;
+  fileChip.innerHTML = `<span class="file-chip">📄 ${file.name}</span>`;
+  parseStatus.className = '';
+  parseStatus.textContent = '';
+  toReviewBtn.disabled = false;
+
+  if (!window.pdfjsLib){
+    parseStatus.className = 'err';
+    parseStatus.textContent = 'The PDF engine failed to load from the CDN. Check your connection and reload.';
+    toReviewBtn.disabled = true;
+  }
+}
+
+// voices
+function populateVoices(){
+  S.voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  const sel = document.getElementById('voiceSelect');
+  if (S.voices.length === 0) return;
+  sel.innerHTML = S.voices.map((v,i)=>`<option value="${i}">${v.name} (${v.lang})</option>`).join('');
+  const englishIdx = S.voices.findIndex(v=>/en-?us/i.test(v.lang));
+  if (englishIdx >= 0) sel.value = englishIdx;
+}
+if (window.speechSynthesis){
+  populateVoices();
+  speechSynthesis.onvoiceschanged = populateVoices;
+}
+
+document.getElementById('modeSelect').addEventListener('change', (e)=>{
+  document.getElementById('teamBField').style.display = e.target.value === 'solo' ? 'none' : '';
+});
+
+// Shared by the PDF-upload flow and the library-load flow: takes a flat
+// array of {n, kind, category, type, question, answer, round?} items,
+// snapshots the current setup-screen config, and jumps to the review screen.
+// setMeta (optional) records where the set came from (competition/round/
+// source) so it survives an Export as JSON round-trip.
+function finalizeParsedAndReview(parsed, setMeta){
+  S.parsed = parsed;
+  S.sets = buildSets(parsed);
+  S.setMeta = setMeta || null;
+
+  S.config.mode = document.getElementById('modeSelect').value;
+  S.config.teamAName = document.getElementById('teamAName').value || 'Team A';
+  S.config.teamBName = document.getElementById('teamBName').value || 'Team B';
+  S.config.tossSeconds = parseFloat(document.getElementById('tossSeconds').value) || 5;
+  S.config.bonusSeconds = parseFloat(document.getElementById('bonusSeconds').value) || 20;
+  S.config.tossPoints = parseFloat(document.getElementById('tossPoints').value) || 4;
+  S.config.bonusPoints = parseFloat(document.getElementById('bonusPoints').value) || 10;
+  S.config.autoRead = document.getElementById('autoRead').checked;
+  S.config.alwaysBonus = document.getElementById('alwaysBonus').checked;
+  S.config.rate = parseFloat(document.getElementById('rateInput').value) || 1;
+  const vIdx = document.getElementById('voiceSelect').value;
+  S.config.voiceURI = (S.voices[vIdx] || null);
+
+  // default filters: everything on
+  S.activeFilters.categories = new Set(parsed.map(q=>q.category));
+  S.activeFilters.types = new Set(parsed.map(q=>q.type || 'Unspecified'));
+  S.activeFilters.kinds = new Set(['TOSS-UP','BONUS']);
+
+  renderReview();
+  showScreen('screen-review');
+}
+
+toReviewBtn.addEventListener('click', async ()=>{
+  if (!currentFile) return;
+  toReviewBtn.disabled = true;
+  toReviewBtn.textContent = 'Parsing…';
+  try {
+    const text = await extractPdfText(currentFile);
+    S.rawText = text;
+    if (text.trim().length < 30){
+      parseStatus.className = 'err';
+      parseStatus.textContent = 'No readable text found — this PDF may be scanned images rather than text. Try a text-based question set.';
+      toReviewBtn.disabled = false;
+      toReviewBtn.textContent = 'Parse & Review Questions →';
+      return;
+    }
+    const parsed = parseQuestions(text);
+    if (parsed.length === 0){
+      parseStatus.className = 'err';
+      parseStatus.textContent = 'Could not find any ANSWER: patterns in this PDF. The format may be unusual — you can still try, or check the file.';
+      toReviewBtn.disabled = false;
+      toReviewBtn.textContent = 'Parse & Review Questions →';
+      return;
+    }
+    finalizeParsedAndReview(parsed, { source: currentFile.name });
+  } catch(err){
+    parseStatus.className = 'err';
+    parseStatus.textContent = 'Something went wrong reading that PDF: ' + err.message;
+  } finally {
+    toReviewBtn.disabled = false;
+    toReviewBtn.textContent = 'Parse & Review Questions →';
+  }
+});
+
+/* ============================================================
+   LIBRARY SCREEN (preloaded sets from a hosted manifest.json)
+============================================================ */
+const MANIFEST_URL_KEY = 'scibowlReaderManifestUrl';
+const manifestUrlInput = document.getElementById('manifestUrl');
+const libraryStatus = document.getElementById('libraryStatus');
+manifestUrlInput.value = localStorage.getItem(MANIFEST_URL_KEY) || '';
+
+document.getElementById('browseLibraryBtn').addEventListener('click', async ()=>{
+  const url = manifestUrlInput.value.trim();
+  if (!url){
+    libraryStatus.className = 'hint err';
+    libraryStatus.textContent = 'Enter a manifest URL first (see the setup guide for how to host one).';
+    return;
+  }
+  localStorage.setItem(MANIFEST_URL_KEY, url);
+  libraryStatus.className = 'hint';
+  libraryStatus.textContent = 'Loading manifest…';
+  try {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const manifest = await res.json();
+    renderLibrary(manifest, url);
+    libraryStatus.textContent = '';
+    showScreen('screen-library');
+  } catch(err){
+    libraryStatus.className = 'hint err';
+    libraryStatus.textContent = 'Could not load that manifest: ' + err.message;
+  }
+});
+
+function resolveLibraryUrl(base, relative){
+  try { return new URL(relative, base).href; } catch(e){ return relative; }
+}
+
+function renderLibrary(manifest, manifestUrl){
+  const list = document.getElementById('libraryList');
+  const meta = document.getElementById('libraryMeta');
+  list.innerHTML = '';
+  const comps = manifest.competitions || [];
+  meta.textContent = `${comps.length} competition(s)`;
+  comps.forEach(comp=>{
+    const header = document.createElement('div');
+    header.className = 'q-item';
+    header.style.cursor = 'default';
+    header.style.background = 'var(--panel-raised)';
+    header.innerHTML = `<div class="meta"><span style="font-weight:700;">${escapeHtml(comp.name || 'Untitled competition')}</span></div>`;
+    list.appendChild(header);
+    (comp.sets || []).forEach(set=>{
+      const el = document.createElement('div');
+      el.className = 'q-item';
+      el.style.paddingLeft = '1.6rem';
+      el.innerHTML = `<div class="meta"><span style="font-size:.85rem;">${escapeHtml(set.label || set.file)}</span></div>`;
+      el.onclick = async ()=>{
+        const loadStatus = document.getElementById('libraryLoadStatus');
+        loadStatus.textContent = 'Loading ' + (set.label || set.file) + '…';
+        try {
+          const fileUrl = resolveLibraryUrl(manifestUrl, set.file);
+          const res = await fetch(fileUrl, { cache: 'no-store' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          const parsed = data.questions || data;
+          if (!Array.isArray(parsed) || parsed.length === 0) throw new Error('No questions found in that file.');
+          loadStatus.textContent = '';
+          finalizeParsedAndReview(parsed, { competition: comp.name, round: set.label, source: set.file });
+        } catch(err){
+          loadStatus.textContent = 'Could not load that set: ' + err.message;
+        }
+      };
+      list.appendChild(el);
+    });
+  });
+  if (comps.length === 0){
+    list.innerHTML = '<p class="hint" style="padding:1rem;">This manifest has no competitions listed yet.</p>';
+  }
+}
+
+document.getElementById('backToSetupFromLibrary').onclick = ()=> showScreen('screen-setup');
+
+/* ============================================================
+   EXPORT AS JSON (review screen → file for the library repo)
+============================================================ */
+// Uses an in-page modal rather than window.prompt(): prompt()/alert()/confirm()
+// are silently disabled in sandboxed iframes (e.g. an embedded preview), where
+// they just return null immediately with no dialog ever shown — which made this
+// button look like it was doing nothing.
+const exportModalOverlay = document.getElementById('exportModalOverlay');
+const exportCompetitionInput = document.getElementById('exportCompetition');
+const exportRoundInput = document.getElementById('exportRound');
+
+function openExportModal(){
+  const prevMeta = S.setMeta || {};
+  exportCompetitionInput.value = prevMeta.competition || '';
+  exportRoundInput.value = prevMeta.round || '';
+  exportModalOverlay.classList.add('active');
+  exportCompetitionInput.focus();
+}
+function closeExportModal(){
+  exportModalOverlay.classList.remove('active');
+}
+
+document.getElementById('exportJsonBtn').addEventListener('click', openExportModal);
+document.getElementById('exportModalCancel').addEventListener('click', closeExportModal);
+exportModalOverlay.addEventListener('click', (e)=>{
+  if (e.target === exportModalOverlay) closeExportModal();
+});
+
+document.getElementById('exportModalConfirm').addEventListener('click', ()=>{
+  const prevMeta = S.setMeta || {};
+  const competition = exportCompetitionInput.value;
+  const round = exportRoundInput.value;
+  const payload = {
+    meta: {
+      competition, round,
+      source: prevMeta.source || (currentFile ? currentFile.name : ''),
+      exportedAt: new Date().toISOString()
+    },
+    questions: S.parsed
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  const slug = (s)=> (s || 'set').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${slug(competition)}__${slug(round)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+  closeExportModal();
+});
+
+document.addEventListener('keydown', (e)=>{
+  if (exportModalOverlay.classList.contains('active') && e.key === 'Escape') closeExportModal();
+});
+
+/* ============================================================
+   REVIEW SCREEN
+============================================================ */
+function applyFilters(){
+  S.filtered = S.parsed.filter(q =>
+    S.activeFilters.kinds.has(q.kind) &&
+    S.activeFilters.categories.has(q.category) &&
+    S.activeFilters.types.has(q.type || 'Unspecified')
+  );
+}
+
+function renderFilters(){
+  const cats = [...new Set(S.parsed.map(q=>q.category))];
+  const types = [...new Set(S.parsed.map(q=>q.type || 'Unspecified'))];
+  const wrap = document.getElementById('filters');
+  wrap.innerHTML = '';
+  const mk = (label, on, onClick) => {
+    const c = document.createElement('div');
+    c.className = 'chip' + (on ? ' on' : '');
+    c.textContent = label;
+    c.onclick = onClick;
+    return c;
+  };
+  wrap.appendChild(mk('Toss-ups', S.activeFilters.kinds.has('TOSS-UP'), ()=>{ toggleSetItem(S.activeFilters.kinds,'TOSS-UP'); refreshReview(); }));
+  wrap.appendChild(mk('Bonuses', S.activeFilters.kinds.has('BONUS'), ()=>{ toggleSetItem(S.activeFilters.kinds,'BONUS'); refreshReview(); }));
+
+  const sep = document.createElement('div');
+  sep.style.cssText = 'width:1px;background:var(--hairline);margin:0 .2rem;align-self:stretch;';
+  wrap.appendChild(sep);
+
+  cats.forEach(c=>{
+    const chip = mk(c, S.activeFilters.categories.has(c), ()=>{ toggleSetItem(S.activeFilters.categories,c); refreshReview(); });
+    chip.title = 'Click to toggle. Shift-click to show only this topic.';
+    chip.addEventListener('click', (e)=>{
+      if (e.shiftKey){
+        e.stopPropagation();
+        S.activeFilters.categories = new Set([c]);
+        refreshReview();
+      }
+    }, true);
+    wrap.appendChild(chip);
+  });
+  types.forEach(t=>wrap.appendChild(mk(t, S.activeFilters.types.has(t), ()=>{ toggleSetItem(S.activeFilters.types,t); refreshReview(); })));
+
+  const sep2 = document.createElement('div');
+  sep2.style.cssText = 'width:1px;background:var(--hairline);margin:0 .2rem;align-self:stretch;';
+  wrap.appendChild(sep2);
+  const allBtn = document.createElement('div');
+  allBtn.className = 'chip'; allBtn.textContent = 'All topics';
+  allBtn.onclick = ()=>{ S.activeFilters.categories = new Set(cats); refreshReview(); };
+  wrap.appendChild(allBtn);
+}
+function toggleSetItem(set, item){ set.has(item) ? set.delete(item) : set.add(item); }
+
+function renderQList(){
+  applyFilters();
+  const list = document.getElementById('qList');
+  list.innerHTML = '';
+  S.filtered.forEach((q, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'q-item' + (idx === S.selectedQIdx ? ' sel' : '');
+    el.innerHTML = `<div class="meta">
+        <span class="badge ${q.kind==='TOSS-UP'?'toss':'bonus'}">${q.kind}</span>
+        ${q.kindWarn ? '<span class="badge warn">check</span>' : ''}
+        <span style="font-size:.72rem;color:var(--text-muted);">${q.category}</span>
+      </div>
+      <div class="snippet">${q.question.slice(0,70)}</div>`;
+    el.onclick = ()=>{ S.selectedQIdx = idx; renderQList(); renderQDetail(); };
+    list.appendChild(el);
+  });
+  document.getElementById('reviewStats').textContent = `${S.parsed.length} parsed · ${S.filtered.length} shown`;
+  document.getElementById('setCount').textContent = `${buildSets(S.filtered).length} question set(s) will be used in the match`;
+}
+
+function renderQDetail(){
+  const detail = document.getElementById('qDetail');
+  const q = S.filtered[S.selectedQIdx];
+  if (!q){ detail.innerHTML = '<p class="hint">No question selected.</p>'; return; }
+  detail.innerHTML = `
+    <div class="row" style="margin-bottom:.8rem;">
+      <div class="field"><label>Kind</label>
+        <select id="editKind"><option ${q.kind==='TOSS-UP'?'selected':''}>TOSS-UP</option><option ${q.kind==='BONUS'?'selected':''}>BONUS</option></select>
+      </div>
+      <div class="field"><label>Category</label><input type="text" id="editCategory" value="${escapeAttr(q.category)}"></div>
+    </div>
+    <div class="field"><label>Question</label><textarea id="editQuestion" rows="6">${escapeHtml(q.question)}</textarea></div>
+    <div class="field"><label>Answer</label><textarea id="editAnswer" rows="2">${escapeHtml(q.answer)}</textarea></div>
+    <div class="row">
+      <button id="saveQBtn">Save changes</button>
+      <button id="deleteQBtn" style="border-color:var(--bad);color:var(--bad);">Delete this entry</button>
+    </div>
+  `;
+  document.getElementById('saveQBtn').onclick = ()=>{
+    q.kind = document.getElementById('editKind').value;
+    q.kindWarn = false;
+    q.category = document.getElementById('editCategory').value;
+    q.question = document.getElementById('editQuestion').value;
+    q.answer = document.getElementById('editAnswer').value;
+    renderQList(); renderFilters();
+  };
+  document.getElementById('deleteQBtn').onclick = ()=>{
+    const realIdx = S.parsed.indexOf(q);
+    if (realIdx >= 0) S.parsed.splice(realIdx,1);
+    S.selectedQIdx = 0;
+    refreshReview();
+  };
+}
+function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+function refreshReview(){ renderFilters(); renderQList(); renderQDetail(); }
+function renderReview(){ S.selectedQIdx = 0; refreshReview(); }
+
+document.getElementById('backToSetup').onclick = ()=> showScreen('screen-setup');
+document.getElementById('startMatchBtn').onclick = ()=>{
+  applyFilters();
+  const sets = buildSets(S.filtered).filter(s=>s.tossup);
+  if (sets.length === 0){ alert('No toss-up questions match your current filters.'); return; }
+  startMatch(sets);
+};
+
+/* ============================================================
+   MATCH ENGINE
+============================================================ */
+function renderWordSpans(container, text, hideInitially){
+  container.innerHTML = '';
+  const tokens = text.split(/(\s+)/);
+  let idx = 0;
+  const wordEls = [];
+  tokens.forEach(tok=>{
+    const start = idx;
+    idx += tok.length;
+    if (tok === '' ) return;
+    if (/^\s+$/.test(tok)){
+      container.appendChild(document.createTextNode(tok));
+    } else {
+      const span = document.createElement('span');
+      span.textContent = tok;
+      span.className = 'word' + (hideInitially ? ' pending' : '');
+      container.appendChild(span);
+      wordEls.push({ start, end: idx, el: span });
+    }
+  });
+  return wordEls;
+}
+function makeRevealState(){ return { activeEl: null, revealedUpTo: -1 }; }
+function revealAndHighlight(wordEls, charIndex, state){
+  let idx = -1;
+  for (let i = 0; i < wordEls.length; i++){
+    if (charIndex >= wordEls[i].start && charIndex < wordEls[i].end){ idx = i; break; }
+  }
+  if (idx === -1){
+    // fall back to nearest word whose start is <= charIndex (handles punctuation offsets)
+    for (let i = wordEls.length - 1; i >= 0; i--){
+      if (wordEls[i].start <= charIndex){ idx = i; break; }
+    }
+  }
+  if (idx === -1) return;
+  if (idx > state.revealedUpTo){
+    for (let i = state.revealedUpTo + 1; i <= idx; i++) wordEls[i].el.classList.remove('pending');
+    state.revealedUpTo = idx;
+  }
+  if (state.activeEl) state.activeEl.classList.remove('active');
+  wordEls[idx].el.classList.add('active');
+  state.activeEl = wordEls[idx].el;
+}
+function revealAll(wordEls, state){
+  wordEls.forEach(w=>w.el.classList.remove('pending'));
+  if (state && state.activeEl){ state.activeEl.classList.remove('active'); state.activeEl = null; }
+}
+
+function speak(text, onend, container){
+  if (!window.speechSynthesis){ if (onend) onend(); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = S.config.rate;
+  if (S.config.voiceURI) u.voice = S.config.voiceURI;
+  let wordEls = [];
+  const state = makeRevealState();
+  if (container){
+    wordEls = renderWordSpans(container, text, true);
+    u.onboundary = (e)=>{
+      if (e.name && e.name !== 'word') return;
+      if (typeof e.charIndex === 'number') revealAndHighlight(wordEls, e.charIndex, state);
+    };
+  }
+  u.onend = ()=>{ if (container) revealAll(wordEls, state); if (onend) onend(); };
+  u.onerror = ()=>{ if (container) revealAll(wordEls, state); if (onend) onend(); };
+  speechSynthesis.speak(u);
+}
+function stopSpeaking(){
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  if (S.match) S.match.readGen = (S.match.readGen || 0) + 1;
+}
+
+function speakPlain(text, onend){
+  if (!window.speechSynthesis){ if (onend) onend(); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = S.config.rate;
+  if (S.config.voiceURI) u.voice = S.config.voiceURI;
+  u.onend = onend || null;
+  u.onerror = onend || null;
+  speechSynthesis.speak(u);
+}
+
+function buildAnnouncement(q){
+  const kindWord = q.kind === 'TOSS-UP' ? 'Tossup' : 'Bonus';
+  const parts = [kindWord, q.category];
+  if (q.type) parts.push(q.type);
+  return parts.join(', ');
+}
+
+// Splits the question text into a stem plus (for multiple choice) individual
+// letter/choice segments, with pauses between them so the reader sounds natural:
+// a pause after the stem, then "letter" <pause> "choice text" <pause> per option.
+function buildReadingQueue(q){
+  const fullText = q.question;
+  const lines = fullText.split('\n');
+  const optRe = /^\s*([WXYZ])\)\s*(.*)$/;
+  let cursor = 0;
+  const stemParts = [];
+  const options = [];
+  let seenOption = false;
+
+  lines.forEach((line, idx)=>{
+    const lineStart = cursor;
+    cursor += line.length + (idx < lines.length - 1 ? 1 : 0);
+    const m = line.match(optRe);
+    if (m){
+      seenOption = true;
+      const letter = m[1];
+      const choice = m[2].trim();
+      const letterIdx = line.indexOf(letter);
+      const choiceIdx = choice ? line.indexOf(choice, letterIdx + 1) : -1;
+      options.push({
+        letterText: letter,
+        letterOffset: lineStart + (letterIdx >= 0 ? letterIdx : 0),
+        choiceText: choice,
+        choiceOffset: lineStart + (choiceIdx >= 0 ? choiceIdx : 0)
+      });
+    } else if (!seenOption){
+      stemParts.push(line);
+    }
+  });
+
+  const stemText = stemParts.join(' ').trim();
+  const queue = [];
+  if (stemText) queue.push({ text: stemText, offset: 0 });
+
+  if (options.length){
+    queue.push({ pause: 450 }); // short pause after the question, before choices
+    options.forEach(opt=>{
+      queue.push({ text: opt.letterText.toLowerCase(), offset: opt.letterOffset });
+      queue.push({ pause: 300 }); // pause after the letter
+      if (opt.choiceText){
+        queue.push({ text: opt.choiceText, offset: opt.choiceOffset });
+      }
+      queue.push({ pause: 350 }); // pause after the answer choice
+    });
+  } else {
+    queue.push({ pause: 450 }); // short pause after the question
+  }
+  return queue;
+}
+
+// Plays a queue of {text, offset} / {pause} items in order, highlighting words
+// in `wordEls` (built from the full displayed question text) as it goes.
+function playReadingQueue(queue, wordEls, gen, onDone){
+  const state = makeRevealState();
+  let i = 0;
+  function next(){
+    if (gen !== S.match.readGen) return;
+    if (i >= queue.length){
+      revealAll(wordEls, state);
+      if (onDone) onDone();
+      return;
+    }
+    const item = queue[i++];
+    if (item.pause){
+      setTimeout(next, item.pause);
+      return;
+    }
+    if (!window.speechSynthesis){ next(); return; }
+    const u = new SpeechSynthesisUtterance(item.text);
+    u.rate = S.config.rate;
+    if (S.config.voiceURI) u.voice = S.config.voiceURI;
+    u.onboundary = (e)=>{
+      if (gen !== S.match.readGen) return;
+      if (e.name && e.name !== 'word') return;
+      if (typeof e.charIndex === 'number') revealAndHighlight(wordEls, item.offset + e.charIndex, state);
+    };
+    u.onend = next;
+    u.onerror = next;
+    speechSynthesis.speak(u);
+  }
+  next();
+}
+
+function startMatch(sets){
+  const solo = S.config.mode === 'solo';
+  S.match = {
+    sets, setIdx: 0, bonusIdx: 0,
+    stage: 'tossup',    // 'tossup' | 'bonus' — which question within the set is current
+    scoreA: 0, scoreB: 0,
+    phase: 'idle',      // idle -> reading -> live -> buzzed -> revealed
+    buzzedTeam: null,
+    lockedTeams: new Set(),
+    timer: { total:0, remaining:0, handle:null },
+    readGen: 0,
+    flagged: new Set(),
+    stats: { byCategory: {}, totalCorrect: 0, totalAttempted: 0 },
+    labelA: solo ? 'You' : S.config.teamAName,
+    labelB: S.config.teamBName
+  };
+  document.body.classList.toggle('solo-mode', solo);
+  document.getElementById('nameA').textContent = solo ? 'Score' : S.config.teamAName;
+  document.getElementById('nameB').textContent = S.config.teamBName;
+  document.getElementById('finalNameA').textContent = solo ? 'Final score' : S.config.teamAName;
+  document.getElementById('finalNameB').textContent = S.config.teamBName;
+  showScreen('screen-match');
+  loadCurrentQuestion();
+  document.addEventListener('keydown', onMatchKey);
+}
+
+function currentQuestion(){
+  const m = S.match;
+  const set = m.sets[m.setIdx];
+  if (!set) return null;
+  if (m.stage === 'bonus') return set.bonuses[m.bonusIdx];
+  return set.tossup;
+}
+
+function loadCurrentQuestion(){
+  const m = S.match;
+  const set = m.sets[m.setIdx];
+  if (!set){ endMatch(); return; }
+  m.phase = 'idle';
+  m.buzzedTeam = null;
+  m.lockedTeams = new Set();
+  m.answerShown = false;
+  document.getElementById('buzzFlag').style.display = 'none';
+  document.getElementById('answerBox').style.display = 'none';
+  document.getElementById('panelA').classList.remove('buzzed-a');
+  document.getElementById('panelB').classList.remove('buzzed-b');
+  document.getElementById('progLabel').textContent = `Set ${m.setIdx+1} / ${m.sets.length}`;
+
+  const q = currentQuestion();
+  if (!q){ advanceSet(); return; }
+  renderQuestionStage(q);
+  renderControls();
+  updateFlagBtn();
+  resetTimerDisplay(q.kind === 'BONUS' ? S.config.bonusSeconds : S.config.tossSeconds);
+  if (S.config.autoRead) startReading();
+}
+
+function toggleFlag(){
+  const m = S.match;
+  const q = currentQuestion();
+  if (!q || !m) return;
+  if (m.flagged.has(q.uid)) m.flagged.delete(q.uid); else m.flagged.add(q.uid);
+  updateFlagBtn();
+}
+function updateFlagBtn(){
+  const m = S.match;
+  const q = currentQuestion();
+  const btn = document.getElementById('flagBtn');
+  if (!btn) return;
+  const flagged = !!(m && q && m.flagged.has(q.uid));
+  btn.classList.toggle('on', flagged);
+  btn.textContent = flagged ? '🚩 Flagged' : '🚩 Flag';
+}
+document.getElementById('flagBtn').addEventListener('click', toggleFlag);
+
+function renderQuestionStage(q){
+  document.getElementById('kindTag').textContent = q.kind;
+  document.getElementById('kindTag').className = 'kind-tag ' + (q.kind==='TOSS-UP'?'toss':'bonus');
+  document.getElementById('catTag').textContent = q.category + (q.type ? ' · ' + q.type : '');
+  renderWordSpans(document.getElementById('qtext'), q.question);
+}
+
+function startReading(){
+  const q = currentQuestion();
+  if (!q) return;
+  S.match.phase = 'reading';
+  renderControls();
+
+  const ttsSupported = !!window.speechSynthesis;
+  if (ttsSupported) speechSynthesis.cancel();
+  const gen = ++S.match.readGen;
+  const wordEls = renderWordSpans(document.getElementById('qtext'), q.question, ttsSupported);
+  const queue = buildReadingQueue(q);
+
+  function afterAllRead(){
+    if (gen !== S.match.readGen) return;
+    if (S.match.phase === 'reading'){
+      S.match.phase = 'live';
+      renderControls();
+      startTimer(q.kind === 'BONUS' ? S.config.bonusSeconds : S.config.tossSeconds);
+    }
+  }
+
+  speakPlain(buildAnnouncement(q), ()=>{
+    if (gen !== S.match.readGen) return;
+    setTimeout(()=>{
+      if (gen !== S.match.readGen) return;
+      playReadingQueue(queue, wordEls, gen, afterAllRead);
+    }, 250);
+  });
+}
+
+function resetTimerDisplay(total){
+  document.getElementById('timerNum').textContent = total;
+  document.getElementById('timerNum').classList.remove('low');
+  const fill = document.getElementById('timerFill');
+  fill.style.width = '100%';
+  fill.classList.remove('low');
+}
+
+function startTimer(seconds){
+  clearInterval(S.match.timer.handle);
+  S.match.timer.total = seconds;
+  S.match.timer.remaining = seconds;
+  updateTimerUI();
+  S.match.timer.handle = setInterval(()=>{
+    S.match.timer.remaining -= 0.1;
+    if (S.match.timer.remaining <= 0){
+      S.match.timer.remaining = 0;
+      updateTimerUI();
+      clearInterval(S.match.timer.handle);
+      onTimeExpired();
+    } else {
+      updateTimerUI();
+    }
+  }, 100);
+}
+function pauseTimer(){ clearInterval(S.match.timer.handle); }
+function updateTimerUI(){
+  const r = S.match.timer.remaining, t = S.match.timer.total;
+  const num = document.getElementById('timerNum');
+  const fill = document.getElementById('timerFill');
+  num.textContent = Math.ceil(r);
+  fill.style.width = Math.max(0, (r/t*100)) + '%';
+  const low = r <= Math.min(2, t*0.25);
+  num.classList.toggle('low', low);
+  fill.classList.toggle('low', low);
+}
+
+function onTimeExpired(){
+  const q = currentQuestion();
+  if (q.kind === 'BONUS'){
+    revealAnswer();
+  } else {
+    // toss-up: if nobody buzzed, reveal, no bonus
+    revealAnswer();
+  }
+}
+
+function buzz(team){
+  const m = S.match;
+  if (S.config.mode === 'solo' && team === 'B') return;
+  if (m.phase !== 'reading' && m.phase !== 'live') return;
+  if (m.lockedTeams.has(team)) return;
+  stopSpeaking();
+  pauseTimer();
+  m.phase = 'buzzed';
+  m.buzzedTeam = team;
+  m.answerShown = false;
+  document.getElementById('answerBox').style.display = 'none';
+  document.getElementById('buzzFlag').style.display = 'inline-block';
+  document.getElementById('buzzFlag').className = 'buzz-flag ' + (team==='A'?'a':'b');
+  document.getElementById('buzzFlag').textContent = (team==='A'?m.labelA:m.labelB) + ' buzzed in';
+  document.getElementById('panelA').classList.toggle('buzzed-a', team==='A');
+  document.getElementById('panelB').classList.toggle('buzzed-b', team==='B');
+  renderControls();
+}
+
+function recordResult(q, correct){
+  const stats = S.match.stats;
+  const cat = q.category || 'Uncategorized';
+  if (!stats.byCategory[cat]) stats.byCategory[cat] = { correct: 0, attempted: 0 };
+  stats.byCategory[cat].attempted++;
+  stats.totalAttempted++;
+  if (correct){
+    stats.byCategory[cat].correct++;
+    stats.totalCorrect++;
+  }
+}
+
+function judge(correct){
+  const m = S.match;
+  const q = currentQuestion();
+  const team = m.buzzedTeam;
+  const pts = q.kind === 'BONUS' ? S.config.bonusPoints : S.config.tossPoints;
+  recordResult(q, correct);
+
+  if (correct){
+    if (team === 'A') m.scoreA += pts; else if (team === 'B') m.scoreB += pts;
+    updateScoreUI();
+    revealAnswer();
+    return;
+  }
+
+  // incorrect
+  m.lockedTeams.add(team);
+  document.getElementById('panelA').classList.remove('buzzed-a');
+  document.getElementById('panelB').classList.remove('buzzed-b');
+  document.getElementById('buzzFlag').style.display = 'none';
+
+  const maxAttempts = S.config.mode === 'solo' ? 1 : 2;
+  if (q.kind === 'BONUS' || m.lockedTeams.size >= maxAttempts){
+    revealAnswer();
+  } else {
+    m.phase = 'live';
+    renderControls();
+    startTimer(Math.max(1, Math.ceil(m.timer.remaining)));
+  }
+}
+
+function showAnswerPreview(){
+  const m = S.match;
+  const q = currentQuestion();
+  const box = document.getElementById('answerBox');
+  box.style.display = 'block';
+  box.innerHTML = '<span class="answer-label">ANSWER: </span><span id="answerWords"></span>';
+  const answerContainer = document.getElementById('answerWords');
+  renderWordSpans(answerContainer, q.answer);
+  if (S.config.autoRead) speak(q.answer, null, answerContainer);
+  m.answerShown = true;
+  renderControls();
+}
+
+function revealAnswer(){
+  const m = S.match;
+  pauseTimer();
+  stopSpeaking();
+  m.phase = 'revealed';
+  const q = currentQuestion();
+  const box = document.getElementById('answerBox');
+  box.style.display = 'block';
+  box.innerHTML = '<span class="answer-label">ANSWER: </span><span id="answerWords"></span>';
+  const answerContainer = document.getElementById('answerWords');
+  renderWordSpans(answerContainer, q.answer);
+  if (S.config.autoRead && !m.answerShown) speak(q.answer, null, answerContainer);
+  m.answerShown = true;
+  renderControls();
+}
+
+function afterToss(wonBonus){
+  const m = S.match;
+  const set = m.sets[m.setIdx];
+  if (wonBonus && set.bonuses && set.bonuses.length){
+    m.stage = 'bonus';
+    m.bonusIdx = 0;
+    loadCurrentQuestion();
+  } else {
+    advanceSet();
+  }
+}
+
+function nextBonusPart(){
+  const m = S.match;
+  const set = m.sets[m.setIdx];
+  m.bonusIdx++;
+  if (m.bonusIdx < set.bonuses.length){
+    loadCurrentQuestion();
+  } else {
+    advanceSet();
+  }
+}
+
+function advanceSet(){
+  const m = S.match;
+  m.setIdx++;
+  m.stage = 'tossup';
+  m.bonusIdx = 0;
+  if (m.setIdx >= m.sets.length){ endMatch(); return; }
+  loadCurrentQuestion();
+}
+
+function updateScoreUI(){
+  document.getElementById('scoreA').textContent = S.match.scoreA;
+  document.getElementById('scoreB').textContent = S.match.scoreB;
+}
+
+function renderStatsScreen(){
+  const stats = S.match.stats;
+  const body = document.getElementById('statsBody');
+  body.innerHTML = '';
+  const cats = Object.keys(stats.byCategory).sort();
+  if (cats.length === 0){
+    body.innerHTML = '<p class="hint">No questions were judged this match.</p>';
+  } else {
+    cats.forEach(cat=>{
+      const c = stats.byCategory[cat];
+      const pct = c.attempted ? Math.round(c.correct / c.attempted * 100) : 0;
+      const row = document.createElement('div');
+      row.className = 'stat-row';
+      row.innerHTML = `
+        <div class="stat-row-top">
+          <span class="stat-cat">${escapeHtml(cat)}</span>
+          <span class="stat-frac">${c.correct}/${c.attempted} · ${pct}%</span>
+        </div>
+        <div class="stat-bar"><div class="stat-bar-fill" style="width:${pct}%;"></div></div>
+      `;
+      body.appendChild(row);
+    });
+  }
+  const overallPct = stats.totalAttempted ? Math.round(stats.totalCorrect / stats.totalAttempted * 100) : 0;
+  document.getElementById('overallAccuracy').textContent =
+    `Overall accuracy: ${stats.totalCorrect}/${stats.totalAttempted} correct (${overallPct}%)`;
+}
+
+function renderFlaggedScreen(){
+  const m = S.match;
+  const wrap = document.getElementById('flaggedSection');
+  const list = document.getElementById('flaggedList');
+  list.innerHTML = '';
+  if (!m.flagged.size){ wrap.style.display = 'none'; return; }
+
+  // Collect the actual question objects (in set order) whose uid was flagged.
+  const flaggedQs = [];
+  m.sets.forEach(set=>{
+    if (set.tossup && m.flagged.has(set.tossup.uid)) flaggedQs.push(set.tossup);
+    (set.bonuses || []).forEach(b=>{ if (m.flagged.has(b.uid)) flaggedQs.push(b); });
+  });
+
+  wrap.style.display = 'block';
+  document.querySelector('#flaggedSection h2').textContent = `🚩 Flagged questions (${flaggedQs.length})`;
+  flaggedQs.forEach(q=>{
+    const item = document.createElement('div');
+    item.className = 'flagged-item';
+    item.innerHTML = `
+      <div class="flagged-item-top">
+        <span class="badge ${q.kind==='TOSS-UP'?'toss':'bonus'}">${q.kind}</span>
+        <span style="font-size:.75rem;color:var(--text-muted);">${escapeHtml(q.category)}${q.type ? ' · ' + escapeHtml(q.type) : ''}</span>
+      </div>
+      <div class="flagged-q">${escapeHtml(q.question)}</div>
+      <div class="flagged-a"><span class="answer-label">ANSWER: </span>${escapeHtml(q.answer)}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function endMatch(){
+  clearInterval(S.match.timer.handle);
+  stopSpeaking();
+  document.removeEventListener('keydown', onMatchKey);
+  document.getElementById('finalA').textContent = S.match.scoreA;
+  document.getElementById('finalB').textContent = S.match.scoreB;
+  renderStatsScreen();
+  renderFlaggedScreen();
+  showScreen('screen-end');
+}
+
+function onMatchKey(e){
+  if (e.key === 'ArrowLeft') buzz('A');
+  if (e.key === 'ArrowRight' && S.config.mode !== 'solo') buzz('B');
+  if (e.key === 'f' || e.key === 'F') toggleFlag();
+  if (e.code === 'Space'){
+    e.preventDefault();
+    const phase = S.match.phase;
+    if (phase === 'idle') startReading();
+    else if (phase === 'reading' || phase === 'live') buzz('A');
+  }
+}
+
+/* ---- controls per phase ---- */
+function renderControls(){
+  const m = S.match;
+  const q = currentQuestion();
+  const wrap = document.getElementById('controls');
+  wrap.innerHTML = '';
+  const add = (label, cls, fn, disabled)=>{
+    const b = document.createElement('button');
+    b.textContent = label; b.className = cls || ''; b.disabled = !!disabled;
+    b.onclick = fn;
+    wrap.appendChild(b);
+    return b;
+  };
+
+  const solo = S.config.mode === 'solo';
+
+  if (m.phase === 'idle'){
+    add('▶ Read Question', 'primary', startReading);
+    add(m.labelA + (solo ? ' buzz in' : ' buzz') + (solo ? ' (space/←)' : ' (←)'), 'buzz-btn a', ()=>buzz('A'));
+    if (!solo) add(m.labelB + ' buzz (→)', 'buzz-btn b', ()=>buzz('B'));
+  } else if (m.phase === 'reading' || m.phase === 'live'){
+    add(m.labelA + (solo ? ' buzz in (space/←)' : ' buzz (space/←)'), 'buzz-btn a', ()=>buzz('A'), m.lockedTeams.has('A'));
+    if (!solo) add(m.labelB + ' buzz (→)', 'buzz-btn b', ()=>buzz('B'), m.lockedTeams.has('B'));
+    add('Reveal Answer', '', revealAnswer);
+  } else if (m.phase === 'buzzed'){
+    if (!m.answerShown){
+      add('Show Answer', 'primary', showAnswerPreview);
+    } else {
+      add('✓ Correct', 'good', ()=>judge(true));
+      add('✗ Incorrect', 'bad', ()=>judge(false));
+    }
+  } else if (m.phase === 'revealed'){
+    if (q.kind === 'TOSS-UP'){
+      const set = m.sets[m.setIdx];
+      const hasBonus = set.bonuses && set.bonuses.length;
+      const wonByCorrect = m.buzzedTeam && !m.lockedTeams.has(m.buzzedTeam);
+      const readBonusAnyway = !wonByCorrect && S.config.alwaysBonus;
+      const goToBonus = hasBonus && (wonByCorrect || readBonusAnyway);
+      if (hasBonus){
+        const label = wonByCorrect ? 'Continue to Bonus →'
+          : readBonusAnyway ? 'Read Bonus anyway →'
+          : 'No bonus — Next Toss-up';
+        add(label, 'primary', ()=> afterToss(goToBonus));
+      } else {
+        add('Next Toss-up →', 'primary', ()=>afterToss(false));
+      }
+    } else {
+      const set = m.sets[m.setIdx];
+      const isLast = m.bonusIdx >= set.bonuses.length - 1;
+      add(isLast ? 'Next Toss-up →' : 'Next Bonus Part →', 'primary', nextBonusPart);
+    }
+  }
+
+  const hint = document.createElement('div');
+  hint.className = 'controls-hint';
+  hint.textContent = solo
+    ? 'space or ← = buzz in   ·   space = read (before buzzing)   ·   f = flag question'
+    : 'space or ← = buzz ' + m.labelA + '   ·   → = buzz ' + m.labelB + '   ·   space = read (before buzzing)   ·   f = flag question';
+  wrap.appendChild(hint);
+}
+
+document.getElementById('restartBtn').onclick = ()=>{
+  showScreen('screen-setup');
+};
+</script>
+</body>
+</html>
