@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T17:23:06.784Z",
+  "generatedAt": "2026-09-08T18:00:18.060Z",
   "competitions": [
     {
       "name": "MIT 2025",
@@ -7,6 +7,66 @@
         {
           "label": "Round 1",
           "file": "MIT-2025/mit-2025__round-1.json"
+        },
+        {
+          "label": "Round 2",
+          "file": "MIT-2025/mit-2025__round-2.json"
+        },
+        {
+          "label": "Round 3",
+          "file": "MIT-2025/mit-2025__round-3.json"
+        },
+        {
+          "label": "Round 4",
+          "file": "MIT-2025/mit-2025__round-4.json"
+        },
+        {
+          "label": "Round 5",
+          "file": "MIT-2025/mit-2025__round-5.json"
+        },
+        {
+          "label": "Round 6",
+          "file": "MIT-2025/mit-2025__round-6.json"
+        },
+        {
+          "label": "Round 7",
+          "file": "MIT-2025/mit-2025__round-7.json"
+        },
+        {
+          "label": "Round 8",
+          "file": "MIT-2025/mit-2025__round-8.json"
+        },
+        {
+          "label": "Round 9",
+          "file": "MIT-2025/mit-2025__round-9.json"
+        },
+        {
+          "label": "Round 10",
+          "file": "MIT-2025/mit-2025__round-10.json"
+        },
+        {
+          "label": "Round 11",
+          "file": "MIT-2025/mit-2025__round-11.json"
+        },
+        {
+          "label": "Round 12",
+          "file": "MIT-2025/mit-2025__round-12.json"
+        },
+        {
+          "label": "Round 13",
+          "file": "MIT-2025/mit-2025__round-13.json"
+        },
+        {
+          "label": "Round 14",
+          "file": "MIT-2025/mit-2025__round-14.json"
+        },
+        {
+          "label": "Round 15",
+          "file": "MIT-2025/mit-2025__round-15.json"
+        },
+        {
+          "label": "Round 16",
+          "file": "MIT-2025/mit-2025__round-16.json"
         }
       ]
     }
