@@ -194,7 +194,7 @@
 
   /* ---------- match screen ---------- */
   #screen-match{ padding:0; }
-  .scoreboard{ display:flex; align-items:stretch; border-bottom:1px solid var(--hairline); background:linear-gradient(180deg, rgba(255,255,255,.02), transparent); }
+  .scoreboard{ display:flex; align-items:stretch; border-bottom:1px solid var(--hairline); background:linear-gradient(180deg, rgba(255,255,255,.02), transparent); position:relative; }
   .team-panel{ flex:1; padding:1.1rem 1.5rem; display:flex; flex-direction:column; justify-content:center; gap:.15rem; transition:background .2s ease, box-shadow .2s ease; position:relative; }
   .team-panel.a{ border-right:1px solid var(--hairline); border-left:4px solid var(--team-a); box-shadow:inset 4px 0 16px -12px var(--team-a-glow); }
   .team-panel.b{ border-left:4px solid var(--team-b); text-align:right; box-shadow:inset -4px 0 16px -12px var(--team-b-glow); }
@@ -209,6 +209,11 @@
   @keyframes buzzedPulseA{ from{ box-shadow:inset 4px 0 16px -12px var(--team-a-glow); } to{ box-shadow:inset 4px 0 30px -8px var(--team-a-glow); } }
   @keyframes buzzedPulseB{ from{ box-shadow:inset -4px 0 16px -12px var(--team-b-glow); } to{ box-shadow:inset -4px 0 30px -8px var(--team-b-glow); } }
   .center-panel{ flex:0 0 230px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:.7rem; gap:.4rem; border-left:1px solid var(--hairline); border-right:1px solid var(--hairline); }
+  .exit-match-btn{
+    position:fixed; bottom:1rem; left:1rem; padding:.35rem .7rem; font-size:.7rem; font-weight:600;
+    color:var(--text-muted); background:var(--panel-solid); border:1px solid var(--hairline); box-shadow:0 4px 14px rgba(0,0,0,.25); z-index:50;
+  }
+  .exit-match-btn:hover{ color:var(--bad); border-color:var(--bad); background:rgba(240,85,75,.08); transform:none; }
   .prog{ font-family:var(--mono); font-size:.72rem; color:var(--text-muted); letter-spacing:.04em; }
   .timer-num{ font-family:var(--mono); font-size:2.2rem; font-weight:700; color:var(--text); transition:color .2s ease; }
   .timer-num.low{ color:var(--bad); text-shadow:0 0 18px rgba(240,85,75,.55); animation:timerBlink .6s ease-in-out infinite alternate; }
@@ -477,6 +482,7 @@
 
 <!-- ============ MATCH SCREEN ============ -->
 <div class="screen" id="screen-match">
+  <button class="exit-match-btn" id="exitMatchBtn" title="End this match and return to setup">← Exit</button>
   <div class="scoreboard">
     <div class="team-panel a" id="panelA">
       <div class="tname" id="nameA">Team A</div>
@@ -541,6 +547,18 @@
     <div class="modal-actions">
       <button id="exportModalCancel">Cancel</button>
       <button class="primary" id="exportModalConfirm">Download JSON</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EXIT MATCH CONFIRM MODAL ============ -->
+<div class="modal-overlay" id="exitMatchModalOverlay">
+  <div class="card modal-card">
+    <h2>End this match?</h2>
+    <p class="hint">You're mid-set — going back to setup will stop the match now. The current score and progress won't be saved.</p>
+    <div class="modal-actions">
+      <button id="exitMatchModalCancel">Cancel</button>
+      <button class="bad" id="exitMatchModalConfirm">End Match</button>
     </div>
   </div>
 </div>
@@ -1234,6 +1252,34 @@ document.addEventListener('keydown', (e)=>{
 });
 
 /* ============================================================
+   EXIT MATCH MID-SET (match screen → back to setup)
+============================================================ */
+const exitMatchModalOverlay = document.getElementById('exitMatchModalOverlay');
+function openExitMatchModal(){
+  exitMatchModalOverlay.classList.add('active');
+}
+function closeExitMatchModal(){
+  exitMatchModalOverlay.classList.remove('active');
+}
+document.getElementById('exitMatchBtn').addEventListener('click', openExitMatchModal);
+document.getElementById('exitMatchModalCancel').addEventListener('click', closeExitMatchModal);
+exitMatchModalOverlay.addEventListener('click', (e)=>{
+  if (e.target === exitMatchModalOverlay) closeExitMatchModal();
+});
+document.getElementById('exitMatchModalConfirm').addEventListener('click', ()=>{
+  closeExitMatchModal();
+  if (S.match){
+    clearInterval(S.match.timer.handle);
+    stopSpeaking();
+  }
+  document.removeEventListener('keydown', onMatchKey);
+  showScreen('screen-setup');
+});
+document.addEventListener('keydown', (e)=>{
+  if (exitMatchModalOverlay.classList.contains('active') && e.key === 'Escape') closeExitMatchModal();
+});
+
+/* ============================================================
    BULK JSON MAKER
    Lets you queue up several PDFs from the same competition, parse them
    all with the exact same extractPdfText/parseQuestions pipeline used by
@@ -1591,14 +1637,6 @@ function revealAll(wordEls, state){
   wordEls.forEach(w=>w.el.classList.remove('pending'));
   if (state && state.activeEl){ state.activeEl.classList.remove('active'); state.activeEl = null; }
 }
-// Force every word in a container fully visible, un-highlighted. Used when
-// reading is interrupted (buzz, skip) so nothing stays stuck hidden.
-function revealAllWordsIn(container){
-  if (!container) return;
-  container.querySelectorAll('.word.pending').forEach(el=>el.classList.remove('pending'));
-  container.querySelectorAll('.word.active').forEach(el=>el.classList.remove('active'));
-}
-
 function speak(text, onend, container){
   if (!window.speechSynthesis){ if (onend) onend(); return; }
   speechSynthesis.cancel();
@@ -1791,6 +1829,16 @@ function currentQuestion(){
   return set.tossup;
 }
 
+// Builds the "Round 3 · Set 2 / 8" label shown at the top of the match
+// screen. Prefers the free-text round label carried on a loaded set's
+// metadata (e.g. an exported "Round 3" JSON file); otherwise falls back to
+// the round number parsed straight from the question packet.
+function progressLabel(m, q){
+  const roundLabel = (S.setMeta && S.setMeta.round) || (q && q.round != null ? ('Round ' + q.round) : null);
+  const setPart = `Set ${m.setIdx + 1} / ${m.sets.length}`;
+  return roundLabel ? `${roundLabel} · ${setPart}` : setPart;
+}
+
 function loadCurrentQuestion(){
   const m = S.match;
   const set = m.sets[m.setIdx];
@@ -1803,10 +1851,10 @@ function loadCurrentQuestion(){
   document.getElementById('answerBox').style.display = 'none';
   document.getElementById('panelA').classList.remove('buzzed-a');
   document.getElementById('panelB').classList.remove('buzzed-b');
-  document.getElementById('progLabel').textContent = `Set ${m.setIdx+1} / ${m.sets.length}`;
 
   const q = currentQuestion();
   if (!q){ advanceSet(); return; }
+  document.getElementById('progLabel').textContent = progressLabel(m, q);
   renderQuestionStage(q);
   renderControls();
   updateFlagBtn();
@@ -1926,9 +1974,8 @@ function buzz(team){
   if (m.phase !== 'reading' && m.phase !== 'live') return;
   if (m.lockedTeams.has(team)) return;
   stopSpeaking();
-  // Show the rest of the question immediately so it can still be read/judged
-  // even though narration stopped mid-way.
-  revealAllWordsIn(document.getElementById('qtext'));
+  // Leave the question exactly as far as it was read — don't reveal the
+  // unread rest just because narration stopped.
   pauseTimer();
   m.phase = 'buzzed';
   m.buzzedTeam = team;
@@ -2152,6 +2199,7 @@ function endMatch(){
 }
 
 function onMatchKey(e){
+  if (document.getElementById('exitMatchModalOverlay').classList.contains('active')) return;
   if (e.key === 'ArrowLeft') buzz('A');
   if (e.key === 'ArrowRight' && S.config.mode !== 'solo') buzz('B');
   if (e.key === 'f' || e.key === 'F') toggleFlag();
